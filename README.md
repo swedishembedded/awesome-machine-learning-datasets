@@ -31,6 +31,7 @@ A competitive model needs more than one big download. Each stage of development 
     - [Mathematics and science corpora](#mathematics-and-science-corpora)
     - [Agentic mid-training](#agentic-mid-training)
     - [Humor and comedy corpora](#humor-and-comedy-corpora)
+    - [Hardware design and embedded corpora](#hardware-design-and-embedded-corpora)
   - [Post-training](#post-training)
     - [Supervised fine-tuning](#supervised-fine-tuning)
     - [Function calling and tool use](#function-calling-and-tool-use)
@@ -262,6 +263,17 @@ Raw joke text for humor language modeling. The Reddit-derived and short-joke set
 | [Short Jokes](https://huggingface.co/datasets/ysharma/short_jokes) | 200K+ | Short jokes | Joke language modeling |
 | [10K Reddit Jokes](https://huggingface.co/datasets/Yashodhar29/10k-jokes-dataset) ⚠️ | 10K | Reddit jokes | Small curated experiments |
 
+#### Hardware design and embedded corpora
+
+Packaged hardware artifacts (schematics, boards, HDL projects) for domain-adaptive pretraining. Keep native formats and document-type boundaries; do not flatten schematics, netlists and RTL into one text stream. Preserve per-file licenses.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Open Schematics](https://huggingface.co/datasets/bshada/open-schematics) | — | Machine-readable schematic and PCB (KiCad) files with visual renderings | Circuit/board CPT; extract netlists, pins, footprints, hierarchy |
+| [Open Schematics v4](https://huggingface.co/datasets/bshada/open-schematics-v4) | — | Updated distribution of open-source schematic/PCB records | Circuit/board CPT |
+| [Lumees HDL Corpus](https://huggingface.co/datasets/lumees/hdl-corpus) ⚠️ | 284,177 repositories | Public HDL repositories with source, testbenches and build materials | HDL CPT with verification context |
+| [VerilogDB](https://arxiv.org/abs/2507.13369) | 20,392 samples | Prepared Verilog samples | Verilog pretraining/SFT |
+
 ### Post-training
 
 Post-training teaches the pretrained model to behave: supervised demonstrations first, then preference and reward learning, then verifiable and agentic reinforcement learning, then safety alignment.
@@ -381,6 +393,51 @@ Teaches mechanisms (phonetic similarity, double meanings, incongruity, reinterpr
 | [HumorGen](https://github.com/edwardajayi/HumorGen) | — | Constrained generation experiments; includes Humor Transfer Bench (400 prompts, eight styles) | Humor-generation curricula and benchmarks |
 | [Incongruity–Resolution Supervision](https://cyberiada.github.io/NYCC-Thinking/) | — | Cartoon scene interpretation with incongruity and resolution traces | Structured humor reasoning |
 | [D-Humor (text labels)](https://huggingface.co/datasets/UVSKKR/D-Humor) ⚠️ | 4,379 memes | Dark-humor intensity labels | Style/intensity prediction |
+
+##### Embedded firmware, hardware and circuit design
+
+Compiler- or simulator-validated records do not establish electrical correctness, RTOS or interrupt safety, or timing; check hardware claims against reference manuals before use. Keep RTL generation and hardware verification as separate mixtures.
+
+###### Firmware and hardware/software interfaces
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [LLM_4_HW-SW_Interface](https://huggingface.co/datasets/NOKHAB-Lab/LLM_4_HW-SW_Interface) | ~15.9K (1,053 real-world) | Compiler-validated ARM Linux SBC peripheral code: sensors, actuators, I²C, SPI, UART, 1-Wire; Raspberry Pi-family focus, not bare-metal Cortex-M | Peripheral-code SFT |
+| [STM32 HAL Dataset](https://huggingface.co/datasets/MuratKomurcu/stm32-hal-dataset) | 29,720 | STM32F4 HAL peripheral implementations; limited advanced RTOS coverage | STM32 peripheral SFT |
+| [ESP-IDF Code](https://huggingface.co/datasets/gouthamsk/esp_idf_code) ⚠️ | — | ESP32 peripheral and application patterns; audit before use | ESP-IDF SFT |
+| [FreeRTOS ESP32](https://huggingface.co/datasets/rafuke/freertos_esp32) | — | FreeRTOS/ESP32 interfaces and RTOS knowledge | RTOS SFT (supplemental) |
+| [Embedded Systems QA](https://huggingface.co/datasets/eniomecaj/embedded-systems-qa) ⚠️ | — | Boot, Cortex-M, registers, RTOS and debugging Q&A; verify against manuals | Explanations (supplemental) |
+| [Mascarade Embedded](https://huggingface.co/datasets/Ailiance-fr/mascarade-embedded-dataset) ⚠️ | — | Bilingual Q&A on Zephyr, FreeRTOS, Yocto, Buildroot, U-Boot, device tree; verify answers | Embedded Q&A (supplemental) |
+| [Embedded Electronics (AEGIS)](https://huggingface.co/datasets/Xerxes-28/embedded-Electronics_V1) ⚠️ | — | Arduino, ESP32, AVR and STM32 examples; research and non-commercial use only | Application code, sensor interfaces |
+| [Embedded Hardware CoT](https://huggingface.co/datasets/pyintel/embedded-hardware-cot) ⚠️ | — | Constraint reasoning: SRAM/ROM allocation, DMA buffers, power and electrical limits; experimental | Embedded reasoning |
+| [Elektor Archive Dataset](https://huggingface.co/datasets/onkanat/elektor-archive-dataset) ⚠️ | — | Electronics-magazine-derived corpus (analog, digital, MCU, measurement); license review needed | Electronics knowledge |
+
+###### RTL, FPGA and hardware verification
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [OpenRTLSet](https://huggingface.co/datasets/ESCAD/OpenRTLSet) | ~131K | Generated RTL examples | RTL specification to Verilog |
+| [LLM_4_Verilog](https://huggingface.co/datasets/NOKHAB-Lab/LLM_4_Verilog) | ~15K modules | Instruction-to-RTL | RTL SFT |
+| [RTLCoder-Data](https://github.com/hkust-zhiyao/RTLCoder) | — | Large synthesized instruction/code corpus | RTL SFT |
+| [Expanded RTLCoder](https://huggingface.co/datasets/LLM4Code/expanded_rtlcoder_12k) | ~12K | RTL code generation examples | RTL SFT |
+| [RTL-Repo](https://huggingface.co/datasets/ahmedallam/RTL-Repo) | — | Repository-level HDL examples | Completion with project context |
+| [SoC Builder RTL](https://huggingface.co/datasets/hasankursun/soc-builder-rtl-v1) | — | Seeded compositions of open-source CPU, bus and peripheral IP | System-level RTL understanding |
+| [Verixa Dataset](https://huggingface.co/datasets/vyomaalabs/verixa-dataset) | — | RTL, HDL and verification data | Verification-oriented SFT |
+| [CodeV-SVA](https://huggingface.co/datasets/wyt2000/CodeV-SVA-datasets) | — | Large natural-language/SystemVerilog-assertion corpus | Assertion generation |
+| [CodeV-SVA-VL](https://huggingface.co/datasets/wyt2000/CodeV-SVA-VL-datasets) | — | Assertions with timing/waveform representations | Multimodal assertion generation |
+| [EquivSVA](https://huggingface.co/datasets/aditigupta/EquivSVA) | — | Equivalent RTL variants with formal properties | Generalizable assertions |
+| [HierSVA-DS](https://huggingface.co/datasets/AnonymousHierSVA/HierSVA) | 342 modules | Hierarchical modules with formally checked SVAs; includes a smaller buggy-design evaluation subset | Hierarchical formal verification |
+
+###### Schematic and analog design
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [SchGen Dataset](https://huggingface.co/datasets/microsoft/SchGen_dataset) ⚠️ | — | Natural language to KiCad schematic via an API-oriented representation; SparkFun-derived sources under CC BY-SA 4.0 ([code](https://github.com/microsoft/SchGen)) | Core schematic SFT |
+| [Human-verified Schematics](https://huggingface.co/datasets/Ohmatic/human-verified-schematics-v1) | — | Real schematic artifacts with human-verification claims; inspect first | High-value schematic subset |
+| [AMS-Net](https://ams-net.github.io/) | — | Analog/mixed-signal netlist representations | Circuit understanding |
+| [LOADBench](https://zenodo.org/records/21759759) | 100+ op-amp topologies | Op-amp topologies with testbenches and sizing-performance data (Ngspice) | Analog optimization SFT |
+| [Open Circuit Benchmark / CktGNN](https://donaldlucy.github.io/analog-benchmark-matrix/) | — | Analog topology generation data | Analog SFT, graph learning |
+| [PCBnet](https://ieeexplore.ieee.org/abstract/document/11768021) | — | Schematic images paired with SPICE netlists | Multimodal circuit understanding |
 
 #### Function calling and tool use
 
