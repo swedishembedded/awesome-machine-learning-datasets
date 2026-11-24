@@ -30,6 +30,7 @@ A competitive model needs more than one big download. Each stage of development 
   - [Mid-training](#mid-training)
     - [Mathematics and science corpora](#mathematics-and-science-corpora)
     - [Agentic mid-training](#agentic-mid-training)
+    - [Humor and comedy corpora](#humor-and-comedy-corpora)
   - [Post-training](#post-training)
     - [Supervised fine-tuning](#supervised-fine-tuning)
     - [Function calling and tool use](#function-calling-and-tool-use)
@@ -60,6 +61,7 @@ A competitive model needs more than one big download. Each stage of development 
     - [Conversational speech and full-duplex](#conversational-speech-and-full-duplex)
     - [Speech-language understanding](#speech-language-understanding)
     - [Singing and specialized vocal production](#singing-and-specialized-vocal-production)
+    - [Stand-up comedy, timing and laughter](#stand-up-comedy-timing-and-laughter)
   - [Evaluation](#evaluation-2)
   - [Training strategy and shortlist](#training-strategy-and-shortlist)
 - [Images](#images)
@@ -92,6 +94,7 @@ A competitive model needs more than one big download. Each stage of development 
 - **Do not add scale figures together.** Many corpora reuse or relabel the same upstream sources (FineWeb, DCLM, Zyda and Dolma share web sources; Granary, MOSEL, YODAS and Emilia-YODAS share recordings). Deduplicate at document or recording level before mixing.
 - **A repository license is not a content license.** `apache-2.0` metadata does not license the underlying web pages, code or recordings. Teacher-model outputs add their own terms.
 - **Keep evaluation isolated.** Check every training mixture for overlap with the benchmarks you report on.
+- **Size** columns give the most useful unit available (tokens, documents, examples, trajectories, tasks, hours of audio, images or clips). Figures are approximate (`~`), taken from dataset cards or papers at the review date, and shown as `—` where no reliable figure was found.
 - Sizes are approximate and taken from dataset cards or papers at the review date. Entries marked ⚠️ *unverified* could not be confirmed against a canonical publisher; see [Contributing](#contributing).
 
 ## Large Language Models
@@ -134,52 +137,52 @@ Corpora used to teach language, world knowledge, programming syntax and mathemat
 
 #### General-purpose corpora
 
-| Dataset | Content | Purpose |
-| ------- | ------- | ------- |
-| [FineWeb-Edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu) | ~1.3T educationally filtered tokens (core release) | High-quality English foundation pretraining |
-| [FineWeb](https://huggingface.co/datasets/HuggingFaceFW/fineweb) | Large-scale cleaned Common Crawl | Broad web-text coverage |
-| [DCLM Baseline](https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0) | ~4T tokens, classifier-filtered web | Reproducible large-scale pretraining; data-filtering studies |
-| [Dolma](https://huggingface.co/datasets/allenai/dolma) | Web, books, papers, code, encyclopedic text | Diverse foundation corpus |
-| [Dolma 3 Pool](https://huggingface.co/datasets/allenai/dolma3_pool) | Component datasets for newer OLMo training | Controlled data-mixture experiments |
-| [Dolma 3 Mix](https://huggingface.co/datasets/allenai/dolma3_mix-6T) | Prepared multi-domain mixture | Larger-scale foundation training |
-| [Zyda-2](https://huggingface.co/datasets/Zyphra/Zyda-2) | Cross-deduplicated mixture of major open corpora | Pretraining with reduced cross-corpus duplication |
-| [RedPajama V2](https://huggingface.co/datasets/togethercomputer/RedPajama-Data-V2) | Common Crawl with quality signals | Custom quality-filtering experiments |
-| [Common Pile](https://huggingface.co/collections/common-pile) | Public-domain and openly licensed corpus family | License-conscious pretraining |
-| [Cosmopedia](https://huggingface.co/datasets/HuggingFaceTB/cosmopedia) | Synthetic educational text | Supplementing natural web text |
-| [SmolLM Corpus](https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus) | Curated multi-source corpus | Efficient small-model pretraining |
-| [Dolma 3](https://huggingface.co/datasets/allenai/dolma3) | Large mixed pretraining corpus | Strong general-purpose corpus |
-| [Nemotron-CC v2](https://huggingface.co/datasets/nvidia/Nemotron-CC-v2) ⚠️ | Curated and rephrased web text | Large-scale candidate; review terms |
-| [SlimPajama](https://huggingface.co/datasets/cerebras/SlimPajama-627B) | Deduplicated mixed text | Smaller-scale pretraining |
-| [The Pile](https://huggingface.co/datasets/EleutherAI/pile) ⚠️ | Research, code, books, web and discussions | Historical baseline; rights review |
-| [Wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia) | Encyclopedic knowledge | General knowledge and retrieval |
-| [Common Pile (dataset)](https://huggingface.co/datasets/EleutherAI/common-pile) | Public-domain and openly licensed material | Rights-conscious training |
+| Dataset | Size | Content | Purpose |
+| ---- | ---- | ---- | ---- |
+| [FineWeb-Edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu) | ~1.3T tokens | Educationally filtered web text (core release) | High-quality English foundation pretraining |
+| [FineWeb](https://huggingface.co/datasets/HuggingFaceFW/fineweb) | ~15T tokens | Large-scale cleaned Common Crawl | Broad web-text coverage |
+| [DCLM Baseline](https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0) | ~4T tokens | Classifier-filtered web | Reproducible large-scale pretraining; data-filtering studies |
+| [Dolma](https://huggingface.co/datasets/allenai/dolma) | ~3T tokens | Web, books, papers, code, encyclopedic text | Diverse foundation corpus |
+| [Dolma 3 Pool](https://huggingface.co/datasets/allenai/dolma3_pool) | — | Component datasets for newer OLMo training | Controlled data-mixture experiments |
+| [Dolma 3 Mix](https://huggingface.co/datasets/allenai/dolma3_mix-6T) | ~6T tokens | Prepared multi-domain mixture | Larger-scale foundation training |
+| [Zyda-2](https://huggingface.co/datasets/Zyphra/Zyda-2) | ~5T tokens | Cross-deduplicated mixture of major open corpora | Pretraining with reduced cross-corpus duplication |
+| [RedPajama V2](https://huggingface.co/datasets/togethercomputer/RedPajama-Data-V2) | ~30T tokens (100B+ docs) | Common Crawl with quality signals | Custom quality-filtering experiments |
+| [Common Pile](https://huggingface.co/collections/common-pile) | ~8 TB text | Public-domain and openly licensed corpus family | License-conscious pretraining |
+| [Cosmopedia](https://huggingface.co/datasets/HuggingFaceTB/cosmopedia) | ~25B tokens (30M files) | Synthetic educational text | Supplementing natural web text |
+| [SmolLM Corpus](https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus) | — | Curated multi-source corpus | Efficient small-model pretraining |
+| [Dolma 3](https://huggingface.co/datasets/allenai/dolma3) | — | Large mixed pretraining corpus | Strong general-purpose corpus |
+| [Nemotron-CC v2](https://huggingface.co/datasets/nvidia/Nemotron-CC-v2) ⚠️ | — | Curated and rephrased web text | Large-scale candidate; review terms |
+| [SlimPajama](https://huggingface.co/datasets/cerebras/SlimPajama-627B) | 627B tokens | Deduplicated mixed text | Smaller-scale pretraining |
+| [The Pile](https://huggingface.co/datasets/EleutherAI/pile) ⚠️ | ~825 GiB (~300B tokens) | Research, code, books, web and discussions | Historical baseline; rights review |
+| [Wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia) | — | Encyclopedic knowledge | General knowledge and retrieval |
+| [Common Pile (dataset)](https://huggingface.co/datasets/EleutherAI/common-pile) | ~8 TB text | Public-domain and openly licensed material | Rights-conscious training |
 
 > **Do not blindly concatenate these.** Without document-level and near-duplicate detection, apparent diversity becomes repeated training examples.
 
 #### Code corpora
 
-| Dataset | Content | Purpose |
-| ------- | ------- | ------- |
-| [The Stack v2](https://huggingface.co/datasets/bigcode/the-stack-v2) | Source-code repositories (Software Heritage IDs; content must be fetched separately 🔗) | Programming-language pretraining |
-| [The Stack v2 Dedup](https://huggingface.co/datasets/bigcode/the-stack-v2-dedup) | Deduplicated Stack v2 derivative | Reducing repository-level duplication |
-| [StarCoderData](https://huggingface.co/datasets/bigcode/starcoderdata) | Source code, notebooks, commits, issues | Code-specialized foundation models |
-| [The Stack](https://huggingface.co/datasets/bigcode/the-stack) | Earlier code corpus | Historical comparison, reproducibility |
-| [Nemotron Pretraining Code v1](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v1) | NVIDIA code pretraining corpus | Advanced coding foundation training |
-| [Nemotron CC Code v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1) | Code-oriented web corpus | Supplementary programming knowledge |
-| [GitHub Code](https://huggingface.co/datasets/codeparrot/github-code) | Source code across programming languages | Code pretraining |
-| [CodeParrot Clean](https://huggingface.co/datasets/codeparrot/codeparrot-clean) | Python code | Python code pretraining |
+| Dataset | Size | Content | Purpose |
+| ---- | ---- | ---- | ---- |
+| [The Stack v2](https://huggingface.co/datasets/bigcode/the-stack-v2) | ~3B files, 600+ languages | Source-code repositories (Software Heritage IDs; content must be fetched separately 🔗) | Programming-language pretraining |
+| [The Stack v2 Dedup](https://huggingface.co/datasets/bigcode/the-stack-v2-dedup) | — | Deduplicated Stack v2 derivative | Reducing repository-level duplication |
+| [StarCoderData](https://huggingface.co/datasets/bigcode/starcoderdata) | ~250B tokens | Source code, notebooks, commits, issues | Code-specialized foundation models |
+| [The Stack](https://huggingface.co/datasets/bigcode/the-stack) | ~6 TB, 358 languages | Earlier code corpus | Historical comparison, reproducibility |
+| [Nemotron Pretraining Code v1](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v1) | — | NVIDIA code pretraining corpus | Advanced coding foundation training |
+| [Nemotron CC Code v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1) | — | Code-oriented web corpus | Supplementary programming knowledge |
+| [GitHub Code](https://huggingface.co/datasets/codeparrot/github-code) | 115M files (~1 TB) | Source code across programming languages | Code pretraining |
+| [CodeParrot Clean](https://huggingface.co/datasets/codeparrot/codeparrot-clean) | ~50 GB | Python code | Python code pretraining |
 
 Preserve file extensions, language labels, repository provenance and file boundaries; they are needed later for completion, repository understanding and task generation.
 
 #### Multilingual corpora
 
-| Dataset | Coverage | Purpose |
-| ------- | -------- | ------- |
-| [FineWeb 2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | 1,000+ languages and varieties | Broad multilingual training |
-| [FineTranslations](https://huggingface.co/datasets/HuggingFaceFW/finetranslations) | Translated web documents | Cross-language transfer |
-| [FineTranslations-Edu](https://huggingface.co/datasets/HuggingFaceFW/finetranslations-edu) | Educational multilingual translations | Multilingual instruction readiness |
-| [Sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Indian languages | Regional specialization |
-| [mC4 (multilingual C4)](https://huggingface.co/datasets/allenai/c4) | Multilingual Common Crawl | Multilingual baselines |
+| Dataset | Size | Coverage | Purpose |
+| ---- | ---- | ---- | ---- |
+| [FineWeb 2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | ~3T words, 1,000+ languages | 1,000+ languages and varieties | Broad multilingual training |
+| [FineTranslations](https://huggingface.co/datasets/HuggingFaceFW/finetranslations) | — | Translated web documents | Cross-language transfer |
+| [FineTranslations-Edu](https://huggingface.co/datasets/HuggingFaceFW/finetranslations-edu) | — | Educational multilingual translations | Multilingual instruction readiness |
+| [Sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | ~251B tokens | Indian languages | Regional specialization |
+| [mC4 (multilingual C4)](https://huggingface.co/datasets/allenai/c4) | C4 en ~365M docs; mC4 ~6.3T tokens | Multilingual Common Crawl | Multilingual baselines |
 
 For Swedish and other Nordic languages FineWeb 2 is a sound base, but supplement it with separately licensed native-language material instead of relying on translated English.
 
@@ -201,17 +204,17 @@ Keep a **replay set** drawn from the original distribution; training only on a n
 
 #### Mathematics and science corpora
 
-| Dataset | Content | Purpose |
-| ------- | ------- | ------- |
-| [FineMath](https://huggingface.co/datasets/HuggingFaceTB/finemath) | Filtered mathematical web documents | Math-heavy pretraining |
-| [OpenWebMath](https://huggingface.co/datasets/open-web-math/open-web-math) | Mathematical web text | Notation and knowledge |
-| [Proof-Pile-2](https://huggingface.co/datasets/EleutherAI/proof-pile-2) | Scientific and mathematical text mixtures | Technical foundation training |
-| [peS2o](https://huggingface.co/datasets/allenai/peS2o) | Academic publications | Scientific domain adaptation |
-| [AutoMathText](https://huggingface.co/datasets/math-ai/AutoMathText) | Mathematics-focused corpus | Mathematical pretraining |
-| [Nemotron CC Math v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Math-v1) | Mathematics-focused web data | Technical-domain enrichment |
-| [Nemotron Math Proofs v1](https://huggingface.co/datasets/nvidia/Nemotron-Math-Proofs-v1) | Proofs and solutions | Proof-oriented training; inspect sample format first |
-| [Proof-Pile](https://huggingface.co/datasets/hoskinson-center/proof-pile) | Mathematics and proofs | Mathematical pretraining |
-| [Stack Exchange](https://huggingface.co/datasets/stackexchange/stackexchange) | Technical questions and solutions | Technical Q&A knowledge |
+| Dataset | Size | Content | Purpose |
+| ---- | ---- | ---- | ---- |
+| [FineMath](https://huggingface.co/datasets/HuggingFaceTB/finemath) | ~54B tokens | Filtered mathematical web documents | Math-heavy pretraining |
+| [OpenWebMath](https://huggingface.co/datasets/open-web-math/open-web-math) | ~14.7B tokens | Mathematical web text | Notation and knowledge |
+| [Proof-Pile-2](https://huggingface.co/datasets/EleutherAI/proof-pile-2) | ~55B tokens | Scientific and mathematical text mixtures | Technical foundation training |
+| [peS2o](https://huggingface.co/datasets/allenai/peS2o) | ~40B tokens | Academic publications | Scientific domain adaptation |
+| [AutoMathText](https://huggingface.co/datasets/math-ai/AutoMathText) | ~200 GB | Mathematics-focused corpus | Mathematical pretraining |
+| [Nemotron CC Math v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Math-v1) | — | Mathematics-focused web data | Technical-domain enrichment |
+| [Nemotron Math Proofs v1](https://huggingface.co/datasets/nvidia/Nemotron-Math-Proofs-v1) | — | Proofs and solutions | Proof-oriented training; inspect sample format first |
+| [Proof-Pile](https://huggingface.co/datasets/hoskinson-center/proof-pile) | ~13 GB | Mathematics and proofs | Mathematical pretraining |
+| [Stack Exchange](https://huggingface.co/datasets/stackexchange/stackexchange) | — | Technical questions and solutions | Technical Q&A knowledge |
 
 Mathematical *knowledge* pretraining is not mathematical *reasoning* SFT: papers teach notation and concepts, problem-solution sets teach how to construct answers.
 
@@ -221,12 +224,24 @@ These corpora can also be mixed into main pretraining; they are listed here beca
 
 Large, mixed-quality interaction corpora used to learn the action/observation distribution before quality-focused SFT. Many attempts are imperfect, so these are not success-only imitation data. Several overlap with each other and with the trajectory sets in [Agentic training](#agentic-training); deduplicate at the task and trajectory level before mixing.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [SWE-ZERO 12M](https://huggingface.co/datasets/AlienKevin/SWE-ZERO-12M-trajectories) | 12.3M trajectories, ~111B tokens | Large-scale agent mid-training |
-| [AgentTrove](https://huggingface.co/datasets/open-thoughts/AgentTrove) | ~1.7M mixed agent traces (coding, terminal, math, computer use) | Diverse agent mid-training / SFT |
-| [Nemotron Terminal Corpus](https://huggingface.co/datasets/nvidia/Nemotron-Terminal-Corpus) | Hundreds of thousands of terminal trajectories | Shell and coding agent behavior |
-| [Mini Coder Trajectories 400k](https://huggingface.co/datasets/ricdomolm/mini-coder-trajs-400k) | ~400k code-agent trajectories | Code-agent mid-training |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [SWE-ZERO 12M](https://huggingface.co/datasets/AlienKevin/SWE-ZERO-12M-trajectories) | 12.3M trajectories (~111B tokens) | Mixed-quality coding-agent trajectories | Large-scale agent mid-training |
+| [AgentTrove](https://huggingface.co/datasets/open-thoughts/AgentTrove) | ~1.7M traces | Mixed agent traces (coding, terminal, math, computer use) | Diverse agent mid-training / SFT |
+| [Nemotron Terminal Corpus](https://huggingface.co/datasets/nvidia/Nemotron-Terminal-Corpus) | 100Ks of trajectories | Hundreds of thousands of terminal trajectories | Shell and coding agent behavior |
+| [Mini Coder Trajectories 400k](https://huggingface.co/datasets/ricdomolm/mini-coder-trajs-400k) | ~400K trajectories | Code-agent trajectories | Code-agent mid-training |
+
+#### Humor and comedy corpora
+
+Raw joke text for humor language modeling. The Reddit-derived and short-joke sets overlap heavily; deduplicate before combining or the model will memorize common jokes. Noisy and not independently quality-verified.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [One Million Reddit Jokes](https://huggingface.co/datasets/SocialGrep/one-million-reddit-jokes) ⚠️ | ~1M posts | Reddit joke posts | Broad humor continued pretraining |
+| [rJokes](https://aclanthology.org/2020.lrec-1.753/) ⚠️ | 550K+ | Reddit jokes with community feedback | Joke generation, weak preference signals |
+| [Short Jokes Dataset](https://huggingface.co/datasets/Maximofn/short-jokes-dataset) | ~232K | Short jokes | One-liners, setup/punchline SFT |
+| [Short Jokes](https://huggingface.co/datasets/ysharma/short_jokes) | 200K+ | Short jokes | Joke language modeling |
+| [10K Reddit Jokes](https://huggingface.co/datasets/Yashodhar29/10k-jokes-dataset) ⚠️ | 10K | Reddit jokes | Small curated experiments |
 
 ### Post-training
 
@@ -236,93 +251,128 @@ Post-training teaches the pretrained model to behave: supervised demonstrations 
 
 ##### General instruction following and chat
 
-| Dataset | Scale / character | Use |
-| ------- | ----------------- | --- |
-| [Tülu 3 SFT Mixture](https://huggingface.co/datasets/allenai/tulu-3-sft-mixture) ⚠️ | ~939K examples; some outputs from third-party models with extra terms | Reproducible general post-training baseline |
-| [UltraChat 200K](https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k) | Curated multi-turn dialogue | Dialogue, instruction following |
-| [OpenHermes 2.5](https://huggingface.co/datasets/teknium/OpenHermes-2.5) | ~1M examples | Diverse synthetic assistant responses |
-| [OpenAssistant OASST1](https://huggingface.co/datasets/OpenAssistant/oasst1) | Human-written conversation trees | Dialogue, comparisons |
-| [No Robots](https://huggingface.co/datasets/HuggingFaceH4/no_robots) | ~10K human-written | High-quality instruction following |
-| [OpenOrca](https://huggingface.co/datasets/Open-Orca/OpenOrca) | FLAN-derived prompts with synthetic explanations | Explanatory responses |
-| [Orca AgentInstruct](https://huggingface.co/datasets/microsoft/orca-agentinstruct-1M-v1) | ~1M synthetic instructions | Task diversity |
-| [SmolTalk](https://huggingface.co/datasets/HuggingFaceTB/smoltalk) | Mixed post-training corpus | Small-model instruction tuning |
-| [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) ⚠️ | ~52K synthetic instructions | Reference SFT baseline |
-| [Databricks Dolly 15K](https://huggingface.co/datasets/databricks/databricks-dolly-15k) | ~15K human-authored | Small supervised baseline |
-| [LIMA](https://huggingface.co/datasets/GAIR/lima) | ~1K curated | Data-efficiency experiments |
-| [Tülu 3 Personas](https://huggingface.co/datasets/allenai/tulu-3-personas-instruction-following) | Synthetic, diverse-persona instruction following | Instruction following |
-| [Nemotron Instruction Following Chat v1](https://huggingface.co/datasets/nvidia/Nemotron-Instruction-Following-Chat-v1) | Constraint adherence and chat (synthetic) | Constraint-following SFT |
-| [OpenAssistant OASST2](https://huggingface.co/datasets/OpenAssistant/oasst2) | Multilingual conversations with ratings and preferences | Dialogue, preference signals |
-| [LMSYS-Chat-1M](https://huggingface.co/datasets/lmsys/lmsys-chat-1m) ⚠️ | Real user prompts and conversations; sensitive content and usage terms | Realistic prompt distributions |
-| [WildChat-1M](https://huggingface.co/datasets/allenai/WildChat-1M) ⚠️ | Real-world conversations; privacy and terms review | Realistic prompt distributions |
+| Dataset | Size | Character | Use |
+| ---- | ---- | ---- | ---- |
+| [Tülu 3 SFT Mixture](https://huggingface.co/datasets/allenai/tulu-3-sft-mixture) ⚠️ | ~939K examples | Some outputs from third-party models with extra terms | Reproducible general post-training baseline |
+| [UltraChat 200K](https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k) | ~200K dialogues | Curated multi-turn dialogue | Dialogue, instruction following |
+| [OpenHermes 2.5](https://huggingface.co/datasets/teknium/OpenHermes-2.5) | Synthetic and mixed-source examples | ~1M examples | Diverse synthetic assistant responses |
+| [OpenAssistant OASST1](https://huggingface.co/datasets/OpenAssistant/oasst1) | ~161K messages | Human-written conversation trees | Dialogue, comparisons |
+| [No Robots](https://huggingface.co/datasets/HuggingFaceH4/no_robots) | ~10K | Human-written | High-quality instruction following |
+| [OpenOrca](https://huggingface.co/datasets/Open-Orca/OpenOrca) | ~4.2M | FLAN-derived prompts with synthetic explanations | Explanatory responses |
+| [Orca AgentInstruct](https://huggingface.co/datasets/microsoft/orca-agentinstruct-1M-v1) | ~1M | Synthetic instructions | Task diversity |
+| [SmolTalk](https://huggingface.co/datasets/HuggingFaceTB/smoltalk) | ~1M | Mixed post-training corpus | Small-model instruction tuning |
+| [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) ⚠️ | ~52K | Synthetic instructions | Reference SFT baseline |
+| [Databricks Dolly 15K](https://huggingface.co/datasets/databricks/databricks-dolly-15k) | ~15K | Human-authored | Small supervised baseline |
+| [LIMA](https://huggingface.co/datasets/GAIR/lima) | ~1K | Curated | Data-efficiency experiments |
+| [Tülu 3 Personas](https://huggingface.co/datasets/allenai/tulu-3-personas-instruction-following) | — | Synthetic, diverse-persona instruction following | Instruction following |
+| [Nemotron Instruction Following Chat v1](https://huggingface.co/datasets/nvidia/Nemotron-Instruction-Following-Chat-v1) | — | Constraint adherence and chat (synthetic) | Constraint-following SFT |
+| [OpenAssistant OASST2](https://huggingface.co/datasets/OpenAssistant/oasst2) | — | Multilingual conversations with ratings and preferences | Dialogue, preference signals |
+| [LMSYS-Chat-1M](https://huggingface.co/datasets/lmsys/lmsys-chat-1m) ⚠️ | ~1M conversations | Real user prompts and conversations; sensitive content and usage terms | Realistic prompt distributions |
+| [WildChat-1M](https://huggingface.co/datasets/allenai/WildChat-1M) ⚠️ | ~1M conversations | Real-world conversations; privacy and terms review | Realistic prompt distributions |
 
 Tülu 3 is the preferred reference for a reproducible SFT pipeline; No Robots and LIMA are useful for separating the effects of sample quality from sample count. Public availability is not unrestricted commercial permission.
 
 ##### Reasoning and mathematics
 
-| Dataset | Capability | Use |
-| ------- | ---------- | --- |
-| [OpenMathInstruct-1](https://huggingface.co/datasets/nvidia/OpenMathInstruct-1) | Worked mathematics solutions | Math SFT |
-| [OpenMathInstruct-2](https://huggingface.co/datasets/nvidia/OpenMathInstruct-2) | Large synthetic math reasoning | Scaling math SFT |
-| [NuminaMath CoT](https://huggingface.co/datasets/AI-MO/NuminaMath-CoT) | Competition math reasoning | Worked-solution SFT; RLVR with extra checkers |
-| [MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA) | Mathematical instruction variants | Generalization |
-| [Orca Math](https://huggingface.co/datasets/microsoft/orca-math-word-problems-200k) | Math word problems | Instruction tuning |
-| [LIMO](https://huggingface.co/datasets/GAIR/LIMO) | Small curated reasoning set | Data-efficiency studies |
-| [GSM8K](https://huggingface.co/datasets/openai/gsm8k) | Grade-school math with solutions | SFT, simple RLVR baseline, 🧪 evaluation |
-| [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | Competition math | SFT, RLVR, 🧪 evaluation |
-| [OpenThoughts 3](https://huggingface.co/datasets/OpenThoughts/OpenThoughts3-1.2M) | Teacher-generated reasoning demonstrations | Reasoning SFT |
-| [DeepSeek-R1 distillation resources](https://huggingface.co/datasets/deepseek-ai/DeepSeek-R1-Distill) ⚠️ | Reasoning supervision; confirm dataset availability separately from models | Reasoning SFT |
+| Dataset | Size | Capability | Use |
+| ---- | ---- | ---- | ---- |
+| [OpenMathInstruct-1](https://huggingface.co/datasets/nvidia/OpenMathInstruct-1) | ~1.8M | Worked mathematics solutions | Math SFT |
+| [OpenMathInstruct-2](https://huggingface.co/datasets/nvidia/OpenMathInstruct-2) | ~14M | Large synthetic math reasoning | Scaling math SFT |
+| [NuminaMath CoT](https://huggingface.co/datasets/AI-MO/NuminaMath-CoT) | ~860K | Competition math reasoning | Worked-solution SFT; RLVR with extra checkers |
+| [MetaMathQA](https://huggingface.co/datasets/meta-math/MetaMathQA) | ~395K | Mathematical instruction variants | Generalization |
+| [Orca Math](https://huggingface.co/datasets/microsoft/orca-math-word-problems-200k) | ~200K | Math word problems | Instruction tuning |
+| [LIMO](https://huggingface.co/datasets/GAIR/LIMO) | 817 | Small curated reasoning set | Data-efficiency studies |
+| [GSM8K](https://huggingface.co/datasets/openai/gsm8k) | ~8.5K (1,319 test) | Grade-school math with solutions | SFT, simple RLVR baseline, 🧪 evaluation |
+| [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | ~12.5K (5,000 test) | Competition math | SFT, RLVR, 🧪 evaluation |
+| [OpenThoughts 3](https://huggingface.co/datasets/OpenThoughts/OpenThoughts3-1.2M) | ~1.2M | Teacher-generated reasoning demonstrations | Reasoning SFT |
+| [DeepSeek-R1 distillation resources](https://huggingface.co/datasets/deepseek-ai/DeepSeek-R1-Distill) ⚠️ | — | Reasoning supervision; confirm dataset availability separately from models | Reasoning SFT |
 
 Distinguish **final-answer correctness** from **reasoning-trace quality**. A right answer can come from invalid steps, which matters for rejection-sampling fine-tuning and STaR.
 
 ##### Coding and software engineering
 
-| Dataset | Focus | Use |
-| ------- | ----- | --- |
-| [OpenCodeInstruct](https://huggingface.co/datasets/nvidia/OpenCodeInstruct) | ~5M coding instructions | Broad coding SFT |
-| [Code-Feedback](https://huggingface.co/datasets/m-a-p/Code-Feedback) | Coding with feedback and corrections | Coding, debugging |
-| [Magicoder OSS-Instruct](https://huggingface.co/datasets/ise-uiuc/Magicoder-OSS-Instruct-75K) | Instruction synthesis from open-source code | Code SFT |
-| [WizardLM Evol-Instruct V2](https://huggingface.co/datasets/WizardLMTeam/WizardLM_evol_instruct_V2_196k) | General-purpose instruction-evolution set (not code-only) | Instruction-complexity experiments |
-| [Nemotron SFT OpenCode v1](https://huggingface.co/datasets/nvidia/Nemotron-SFT-OpenCode-v1) | Code-centered instruction data | Coding post-training |
-| [Nemotron SFT SWE v3](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3) | Software engineering trajectories | Repository-level agent SFT |
-| [Open SWE Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | Software engineering agent traces | Tool-trajectory imitation |
+| Dataset | Size | Focus | Use |
+| ---- | ---- | ---- | ---- |
+| [OpenCodeInstruct](https://huggingface.co/datasets/nvidia/OpenCodeInstruct) | ~5M | Coding instructions | Broad coding SFT |
+| [Code-Feedback](https://huggingface.co/datasets/m-a-p/Code-Feedback) | ~66K | Coding with feedback and corrections | Coding, debugging |
+| [Magicoder OSS-Instruct](https://huggingface.co/datasets/ise-uiuc/Magicoder-OSS-Instruct-75K) | ~75K | Instruction synthesis from open-source code | Code SFT |
+| [WizardLM Evol-Instruct V2](https://huggingface.co/datasets/WizardLMTeam/WizardLM_evol_instruct_V2_196k) | ~196K | General-purpose instruction-evolution set (not code-only) | Instruction-complexity experiments |
+| [Nemotron SFT OpenCode v1](https://huggingface.co/datasets/nvidia/Nemotron-SFT-OpenCode-v1) | — | Code-centered instruction data | Coding post-training |
+| [Nemotron SFT SWE v3](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3) | — | Software engineering trajectories | Repository-level agent SFT |
+| [Open SWE Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | 200K+ trajectories | Software engineering agent traces | Tool-trajectory imitation |
 
 Treat code data at three levels: single-function generation from a spec; file-level edits that preserve surrounding code; and repository-level tasks that inspect a project, use tools, change several files and validate behavior. The third is closest to what a software-engineering agent needs.
 
 ##### Multilingual, scientific and domain-specific
 
-| Dataset | Domain | Use |
-| ------- | ------ | --- |
-| [Aya Dataset](https://huggingface.co/datasets/CohereForAI/aya_dataset) | Multilingual instructions | Cross-lingual alignment |
-| [SciRIFF](https://huggingface.co/datasets/allenai/SciRIFF) | Scientific information extraction and reasoning | Scientific assistant SFT |
-| [SciInstruct](https://huggingface.co/datasets/TIGER-Lab/SciInstruct) ⚠️ | Scientific problem solving | Scientific reasoning |
-| [LegalBench](https://huggingface.co/datasets/nguha/legalbench) 🧪 | Legal reasoning tasks (related to, not, LawInstruct) | Legal evaluation, task taxonomy |
-| [Medical Meadow flashcards](https://huggingface.co/datasets/medalpaca/medical_meadow_medical_flashcards) | Medical flashcard Q&A (related to, not, MedInstruct-52K) | Medical specialization |
-| [Bitext Customer Support](https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset) | Customer-service conversations | Support agents |
+| Dataset | Size | Domain | Use |
+| ---- | ---- | ---- | ---- |
+| [Aya Dataset](https://huggingface.co/datasets/CohereForAI/aya_dataset) | ~204K | Multilingual instructions | Cross-lingual alignment |
+| [SciRIFF](https://huggingface.co/datasets/allenai/SciRIFF) | ~137K | Scientific information extraction and reasoning | Scientific assistant SFT |
+| [SciInstruct](https://huggingface.co/datasets/TIGER-Lab/SciInstruct) ⚠️ | ~254K | Scientific problem solving | Scientific reasoning |
+| [LegalBench](https://huggingface.co/datasets/nguha/legalbench) 🧪 | 162 tasks | Legal reasoning tasks (related to, not, LawInstruct) | Legal evaluation, task taxonomy |
+| [Medical Meadow flashcards](https://huggingface.co/datasets/medalpaca/medical_meadow_medical_flashcards) | ~34K | Medical flashcard Q&A (related to, not, MedInstruct-52K) | Medical specialization |
+| [Bitext Customer Support](https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset) | ~27K | Customer-service conversations | Support agents |
 
 LawInstruct and MedInstruct-52K are not listed because no canonical release was verified. Pair any domain SFT with independent evaluation; fluent domain vocabulary is not evidence of accurate conclusions.
+
+##### Humor, sarcasm and conversational comedy
+
+Teaches humor on demand (not in every response) and recognition of sarcasm and context. Recognizing sarcasm is a separate objective from using it appropriately.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Humor ShareGPT 5K](https://huggingface.co/datasets/briancconnelly/humor-sharegpt-5k) | 5,234 conversations | Joke conversations | Instruction SFT for humor |
+| [Jokes: Setup and Punchline](https://huggingface.co/datasets/hltoh/jokes) | — | Paired short jokes | Completion and punchline generation |
+| [Anekdots Dialogs](https://huggingface.co/datasets/igorktech/anekdots_dialogs) | — | Conversational jokes | Dialogue-format humor |
+| [Comedy Style Instruct](https://huggingface.co/datasets/2stacks/comedy-style-instruct) ⚠️ | — | Small style-conditioned corpus; non-commercial, includes copyrighted stand-up excerpts | Comedy style controls |
+| [FunnyBench](https://huggingface.co/datasets/fchaubard/funny_bench) ⚠️ | 24,438 transcripts | Stand-up transcripts with audience/laughter tags plus 12,218 engagement-based preference pairs; Apache-2.0 card but TikTok-derived performances need rights review | Stand-up SFT and weak preferences |
+| [FunnyData](https://huggingface.co/datasets/SajilAwale/FunnyData) | — | Reddit jokes with humor, offense and sentiment annotations | Multitask humor selection |
+| [Humor Generation Experiments](https://huggingface.co/datasets/halaction/humor-generation) | — | Generated candidates and evaluations | Generative humor methodology |
+| [LLM Humor Research Outputs](https://huggingface.co/datasets/fchaubard/llm_humor_research_outputs) | 14 methods × held-out prompts | Outputs of humor generation methods | Comparing humor decoders and reward models |
+| [SARC](https://huggingface.co/datasets/CreativeLang/SARC_Sarcasm) | ~1.3M comments | Reddit sarcastic comments with nonsarcastic comparisons (varies by release) | Sarcasm detection, contextual irony |
+| [Contextual Humor Dataset](https://github.com/SimonMarinov/ContextualHumorDataset) | — | Joke spans with surrounding context (laughter-aligned) | Humor recognition in longer conversations |
+| [HaHackathon](https://aclanthology.org/2021.semeval-1.9/) | — | Text with humor and offensiveness scores from human raters | Humor with social-awareness labeling |
+| [Harm or Humor](https://github.com/insait-institute/harm-or-humor) | — | Text, image, video; multilingual | Humor vs harmful-content distinctions |
+| [Conversational Sarcasm Benchmark](https://huggingface.co/datasets/darksyntax0/conversational-sarcasm-benchmark) 🧪 | — | Conversation/speech sarcasm | Best treated as evaluation, not comedy SFT |
+
+##### Humor reasoning, puns and wordplay
+
+Teaches mechanisms (phonetic similarity, double meanings, incongruity, reinterpretation) rather than only labels. Reserve held-out sets such as Phunny for evaluation.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [ExPUNations](https://aclanthology.org/2022.emnlp-main.304/) | — | Puns with keywords, explanations and funniness ratings | Generate and explain wordplay; pun-quality reward |
+| [Phunny](https://huggingface.co/datasets/disi-unibo-nlp/Phunny) 🧪 | 350 | Novel structured puns, contamination-checked | Held-out pun generation/reasoning evaluation |
+| [Puns 205](https://davidbau.github.io/puns/DATASET.html) | — | Pun vs literal cloze completions | Contrastive wordplay modeling |
+| [Humicroedit](https://cs.rochester.edu/u/nhossain/humicroedit.html) ⚠️ | — | Minimal humorous headline edits with ratings and pairwise comparisons ([HF mirror](https://huggingface.co/datasets/tasksource/humicroedit)) | Misdirection from one-word changes; ranking |
+| [FunLines](https://cs.rochester.edu/u/nhossain/funlines.html) ⚠️ | — | Crowd-written funny headline edits with funniness ratings | Constrained joke rewriting, human-guided optimization |
+| [HumorGen](https://github.com/edwardajayi/HumorGen) | — | Constrained generation experiments; includes Humor Transfer Bench (400 prompts, eight styles) | Humor-generation curricula and benchmarks |
+| [Incongruity–Resolution Supervision](https://cyberiada.github.io/NYCC-Thinking/) | — | Cartoon scene interpretation with incongruity and resolution traces | Structured humor reasoning |
+| [D-Humor (text labels)](https://huggingface.co/datasets/UVSKKR/D-Humor) ⚠️ | 4,379 memes | Dark-humor intensity labels | Style/intensity prediction |
 
 #### Function calling and tool use
 
 Teaches schema interpretation, argument generation, call/no-call decisions, parallel calls and use of tool results. Executed and independently checked calls are stronger evidence than correct-looking synthetic ones; keep schema correctness, execution correctness and task success distinct.
 
-| Dataset | Scale / content | Capability |
+| Dataset | Size | Capability |
 | ---- | ---- | ---- |
 | [xLAM Function Calling 60k](https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k) | 60k | Structured calls, multiple functions, argument correctness |
 | [Glaive Function Calling v2](https://huggingface.co/datasets/glaiveai/glaive-function-calling-v2) | 113k | Single/multi-turn calls and function responses |
 | [ToolACE](https://huggingface.co/datasets/Team-ACE/ToolACE) | ~11k | High-quality synthetic API calling |
 | [Hermes Function Calling](https://huggingface.co/datasets/NousResearch/hermes-function-calling-v1) | ~11.6k | Hermes-formatted tool use |
 | [Toucan-1.5M](https://huggingface.co/datasets/Agent-Ark/Toucan-1.5M) | ~1.5M | Diverse synthetic MCP/tool trajectories |
-| [Nemotron Agentic v1](https://huggingface.co/datasets/nvidia/Nemotron-Agentic-v1) | Large mixed SFT corpus | Conversational and multi-step agent traces |
-| [Nemotron SFT Agentic v2](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Agentic-v2) | Multiple subsets | Synthetic single/multi-turn tool workflows |
-| [Nemotron SFT Agentic v4](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Agentic-v4) | Recent synthetic release | Multi-turn tool selection and orchestration |
-| [Nemotron RL Conversational Tool Use](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1) | RL tasks | Tool-use reward training |
-| [When2Call](https://huggingface.co/datasets/zanand/When2Call) | Tool decision examples | When to call, answer, clarify or abstain |
+| [Nemotron Agentic v1](https://huggingface.co/datasets/nvidia/Nemotron-Agentic-v1) | — | Conversational and multi-step agent traces |
+| [Nemotron SFT Agentic v2](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Agentic-v2) | — | Synthetic single/multi-turn tool workflows |
+| [Nemotron SFT Agentic v4](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Agentic-v4) | — | Multi-turn tool selection and orchestration |
+| [Nemotron RL Conversational Tool Use](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1) | — | Tool-use reward training |
+| [When2Call](https://huggingface.co/datasets/zanand/When2Call) | — | When to call, answer, clarify or abstain |
 | [xLAM Irrelevance](https://huggingface.co/datasets/Salesforce/xlam-irrelevance-7.5k) | 7.5k | Avoiding irrelevant tool use |
 | [UltraData SFT Agent 2609](https://huggingface.co/datasets/openbmb/UltraData-SFT-Agent-2609) | ~240k rows | Agent-focused instruction and reasoning |
-| [APIGen / xLAM](https://github.com/salesforce/xLAM) | Synthetic API-call generation and verification | Verified function-call data |
-| [APIGen-MT](https://apigen-mt.github.io/) | Multi-turn API interaction trajectories | Multi-turn tool use |
-| [APIBench](https://huggingface.co/datasets/gorilla-llm/APIBench) | API selection and argument generation | API documentation understanding |
-| [TaskBench](https://github.com/microsoft/TaskBench) | Planning and tool-task decomposition | Planner training |
+| [APIGen / xLAM](https://github.com/salesforce/xLAM) | — | Verified function-call data |
+| [APIGen-MT](https://apigen-mt.github.io/) | — | Multi-turn tool use |
+| [APIBench](https://huggingface.co/datasets/gorilla-llm/APIBench) | 16,450 instruction–API pairs | API documentation understanding |
+| [TaskBench](https://github.com/microsoft/TaskBench) | — | Planner training |
 
 #### Preference and reward learning
 
@@ -330,39 +380,39 @@ Preference data answers: given two or more responses, which should the model pre
 
 ##### Preference datasets
 
-| Dataset | Annotation | Algorithms |
-| ------- | ---------- | ---------- |
-| [UltraFeedback](https://huggingface.co/datasets/openbmb/UltraFeedback) | Multiple responses with model-generated ratings | Reward modeling, DPO |
-| [UltraFeedback Binarized](https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized) | Chosen/rejected pairs (loses rating detail) | DPO, ORPO |
-| [Tülu 3 datasets](https://huggingface.co/collections/allenai/tulu-3-datasets) | On- and off-policy preference mixtures | DPO, reward modeling |
-| [HelpSteer](https://huggingface.co/datasets/nvidia/HelpSteer) | Human-rated response attributes | Multi-attribute reward models |
-| [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2) | Human ratings and preferences | Reward modeling, DPO |
-| [HelpSteer3](https://huggingface.co/datasets/nvidia/HelpSteer3) | Later NVIDIA preference generation | Preference and reward learning |
-| [Anthropic HH-RLHF](https://huggingface.co/datasets/Anthropic/hh-rlhf) | Helpful/harmless chosen-rejected dialogues | DPO, reward modeling |
-| [Nectar](https://huggingface.co/datasets/berkeley-nest/Nectar) | Multiple ranked responses per prompt | Ranking-based rewards |
-| [Stanford SHP](https://huggingface.co/datasets/stanfordnlp/SHP) | Community-derived comparisons | Preference optimization |
-| [OpenAI Summarize from Feedback](https://huggingface.co/datasets/openai/summarize_from_feedback) | Human comparisons of summaries | Reward models |
-| [Orca DPO Pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs) | Synthetic pairs | DPO experiments |
-| [Capybara Preferences](https://huggingface.co/datasets/argilla/Capybara-Preferences) | Multi-turn preferences | Conversational DPO |
-| [CodeUltraFeedback](https://huggingface.co/datasets/RLHFlow/CodeUltraFeedback-standard) | Coding preferences | Code DPO |
-| [UltraInteract Pairs](https://huggingface.co/datasets/openbmb/UltraInteract_pair) | Reasoning and interaction preferences | Reasoning preference tuning |
-| [Math-Step-DPO-10K](https://huggingface.co/datasets/xinlai/Math-Step-DPO-10K) | Mathematical step preferences | Step-oriented DPO |
-| [UltraFeedback Binarized (cleaned)](https://huggingface.co/datasets/allenai/ultrafeedback_binarized_cleaned) | Cleaned chosen/rejected pairs | DPO, reward modeling |
-| [Argilla UltraFeedback](https://huggingface.co/datasets/argilla/ultrafeedback-binarized-preferences-cleaned) | Cleaned preference pairs | DPO |
-| [TRL UltraFeedback](https://huggingface.co/datasets/trl-lib/ultrafeedback_binarized) | Common DPO training representation | DPO |
-| [Curriculum DPO Preferences](https://huggingface.co/datasets/ServiceNow-AI/Curriculum_DPO_preferences) | Preference pairs with difficulty progression | Curriculum DPO |
+| Dataset | Size | Annotation | Algorithms |
+| ---- | ---- | ---- | ---- |
+| [UltraFeedback](https://huggingface.co/datasets/openbmb/UltraFeedback) | ~64K prompts, ~256K responses | Multiple responses with model-generated ratings | Reward modeling, DPO |
+| [UltraFeedback Binarized](https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized) | ~61K pairs | Chosen/rejected pairs (loses rating detail) | DPO, ORPO |
+| [Tülu 3 datasets](https://huggingface.co/collections/allenai/tulu-3-datasets) | — | On- and off-policy preference mixtures | DPO, reward modeling |
+| [HelpSteer](https://huggingface.co/datasets/nvidia/HelpSteer) | ~37K responses | Human-rated response attributes | Multi-attribute reward models |
+| [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2) | ~21K responses (~10K prompts) | Human ratings and preferences | Reward modeling, DPO |
+| [HelpSteer3](https://huggingface.co/datasets/nvidia/HelpSteer3) | — | Later NVIDIA preference generation | Preference and reward learning |
+| [Anthropic HH-RLHF](https://huggingface.co/datasets/Anthropic/hh-rlhf) | ~170K comparisons | Helpful/harmless chosen-rejected dialogues | DPO, reward modeling |
+| [Nectar](https://huggingface.co/datasets/berkeley-nest/Nectar) | ~183K prompts | Multiple ranked responses per prompt | Ranking-based rewards |
+| [Stanford SHP](https://huggingface.co/datasets/stanfordnlp/SHP) | ~385K | Community-derived comparisons | Preference optimization |
+| [OpenAI Summarize from Feedback](https://huggingface.co/datasets/openai/summarize_from_feedback) | — | Human comparisons of summaries | Reward models |
+| [Orca DPO Pairs](https://huggingface.co/datasets/Intel/orca_dpo_pairs) | ~12.9K | Synthetic pairs | DPO experiments |
+| [Capybara Preferences](https://huggingface.co/datasets/argilla/Capybara-Preferences) | ~15K | Multi-turn preferences | Conversational DPO |
+| [CodeUltraFeedback](https://huggingface.co/datasets/RLHFlow/CodeUltraFeedback-standard) | — | Coding preferences | Code DPO |
+| [UltraInteract Pairs](https://huggingface.co/datasets/openbmb/UltraInteract_pair) | — | Reasoning and interaction preferences | Reasoning preference tuning |
+| [Math-Step-DPO-10K](https://huggingface.co/datasets/xinlai/Math-Step-DPO-10K) | ~10K | Mathematical step preferences | Step-oriented DPO |
+| [UltraFeedback Binarized (cleaned)](https://huggingface.co/datasets/allenai/ultrafeedback_binarized_cleaned) | — | Cleaned chosen/rejected pairs | DPO, reward modeling |
+| [Argilla UltraFeedback](https://huggingface.co/datasets/argilla/ultrafeedback-binarized-preferences-cleaned) | ~61K pairs | Cleaned preference pairs | DPO |
+| [TRL UltraFeedback](https://huggingface.co/datasets/trl-lib/ultrafeedback_binarized) | — | Common DPO training representation | DPO |
+| [Curriculum DPO Preferences](https://huggingface.co/datasets/ServiceNow-AI/Curriculum_DPO_preferences) | — | Preference pairs with difficulty progression | Curriculum DPO |
 
 ##### Reward models and process supervision
 
-| Resource | Signal | Application |
-| -------- | ------ | ----------- |
-| [PRM800K](https://github.com/openai/prm800k) | Human step-level correctness | Process reward modeling |
-| [Math-Shepherd](https://huggingface.co/datasets/peiyi9979/Math-Shepherd) | Step-level mathematical supervision | Process reward modeling |
-| [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2) | Multi-dimensional human ratings | Scalar or attribute rewards |
-| [UltraFeedback](https://huggingface.co/datasets/openbmb/UltraFeedback) | AI-generated quality scores | Outcome reward models |
-| [RewardBench](https://huggingface.co/datasets/allenai/reward-bench) 🧪 | Held-out preference comparisons | Reward-model evaluation |
-| [Agent Reward Bench](https://huggingface.co/datasets/McGill-NLP/agent-reward-bench) 🧪 | Agent outcome assessments | Agent reward evaluation |
-| [AgentJudgeBench](https://huggingface.co/datasets/ServiceNow-AI/AgentJudgeBench) 🧪 | Agent trajectory assessment | Judge evaluation |
+| Resource | Size | Signal | Application |
+| ---- | ---- | ---- | ---- |
+| [PRM800K](https://github.com/openai/prm800k) | ~800K step labels | Human step-level correctness | Process reward modeling |
+| [Math-Shepherd](https://huggingface.co/datasets/peiyi9979/Math-Shepherd) | — | Step-level mathematical supervision | Process reward modeling |
+| [HelpSteer2](https://huggingface.co/datasets/nvidia/HelpSteer2) | ~21K responses (~10K prompts) | Multi-dimensional human ratings | Scalar or attribute rewards |
+| [UltraFeedback](https://huggingface.co/datasets/openbmb/UltraFeedback) | ~64K prompts, ~256K responses | AI-generated quality scores | Outcome reward models |
+| [RewardBench](https://huggingface.co/datasets/allenai/reward-bench) 🧪 | ~3K prompts | Held-out preference comparisons | Reward-model evaluation |
+| [Agent Reward Bench](https://huggingface.co/datasets/McGill-NLP/agent-reward-bench) 🧪 | ~1.3K trajectories | Agent outcome assessments | Agent reward evaluation |
+| [AgentJudgeBench](https://huggingface.co/datasets/ServiceNow-AI/AgentJudgeBench) 🧪 | — | Agent trajectory assessment | Judge evaluation |
 
 Keep reward types distinct and never collapse them into one unqualified score:
 
@@ -373,42 +423,52 @@ Keep reward types distinct and never collapse them into one unqualified score:
 
 A verifier-backed reward avoids treating another model's subjective preference as ground truth.
 
+##### Humor and funniness preferences
+
+Candidates written for the same setup, context or image give the cleanest comparisons. Engagement-based pairs across different clips are a weaker signal. Evaluate by language and audience, since averaged scores hide disagreement.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [New Yorker Caption Ranking](https://huggingface.co/datasets/yguooo/newyorker_caption_ranking) ⚠️ | 250M+ ratings, 2.2M captions | Human ratings of cartoon captions; research-only, not for direct commercial product training | Reward modeling, ranking, research DPO |
+| [Rapidata Multilingual Joke Preferences](https://huggingface.co/datasets/Rapidata/multilingual-llm-jokes-4o-claude-gemini) | 1M+ votes on ~10K jokes | Human funniness votes in English, Arabic, Japanese, Vietnamese, Portuguese; check license and generated-output rights | Audience-conditioned funniness reward |
+| [Humor Evals](https://github.com/kristopolous/humor-evals) ⚠️ | 195K+ jokes | Reddit jokes with scores | Weak ranking and comparison |
+
 #### Verifiable reinforcement learning
 
 RLVR needs a task plus an independent way to decide whether an attempt succeeded; it does not need a reference trajectory. That is the key difference from offline SFT.
 
 ##### Mathematics and symbolic verification
 
-| Dataset | Verification | Use |
-| ------- | ------------ | --- |
-| [Tülu 3 RLVR (GSM/MATH/IF mixed)](https://huggingface.co/datasets/allenai/RLVR-GSM-MATH-IF-Mixed-Constraints) | Answer checking plus instruction constraints | Reproducible RLVR; recipe in [Open Instruct](https://github.com/allenai/open-instruct/blob/main/docs/tulu3.md) |
-| [DeepScaleR Preview](https://huggingface.co/datasets/agentica-org/DeepScaleR-Preview-Dataset) | Math answer verification | GRPO/RLVR experiments |
-| [GSM8K](https://huggingface.co/datasets/openai/gsm8k) | Numerical answer extraction | Simple RLVR baseline |
-| [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | Mathematical answer checking | Reasoning RL |
-| [NuminaMath CoT](https://huggingface.co/datasets/AI-MO/NuminaMath-CoT) | Reference solutions | Verifiable reasoning with extra checkers |
-| [Nemotron Math v2](https://huggingface.co/datasets/nvidia/Nemotron-Math-v2) | Math problems and reasoning data | SFT or RL depending on subset |
+| Dataset | Size | Verification | Use |
+| ---- | ---- | ---- | ---- |
+| [Tülu 3 RLVR (GSM/MATH/IF mixed)](https://huggingface.co/datasets/allenai/RLVR-GSM-MATH-IF-Mixed-Constraints) | ~30K prompts | Answer checking plus instruction constraints | Reproducible RLVR; recipe in [Open Instruct](https://github.com/allenai/open-instruct/blob/main/docs/tulu3.md) |
+| [DeepScaleR Preview](https://huggingface.co/datasets/agentica-org/DeepScaleR-Preview-Dataset) | ~40K | Math answer verification | GRPO/RLVR experiments |
+| [GSM8K](https://huggingface.co/datasets/openai/gsm8k) | ~8.5K (1,319 test) | Numerical answer extraction | Simple RLVR baseline |
+| [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | ~12.5K (5,000 test) | Mathematical answer checking | Reasoning RL |
+| [NuminaMath CoT](https://huggingface.co/datasets/AI-MO/NuminaMath-CoT) | ~860K | Reference solutions | Verifiable reasoning with extra checkers |
+| [Nemotron Math v2](https://huggingface.co/datasets/nvidia/Nemotron-Math-v2) | — | Math problems and reasoning data | SFT or RL depending on subset |
 
 Exact string match is rarely a sufficient math verifier: handle numeric normalization, symbolic equivalence, multiple valid forms and answer-extraction errors. Recommended first implementation: Tülu 3 RLVR.
 
 ##### Coding with executable rewards
 
-| Dataset / environment | Verification | Role |
-| --------------------- | ------------ | ---- |
-| [APPS](https://huggingface.co/datasets/codeparrot/apps) | Execution against test cases | Coding RL |
-| [CodeContests](https://huggingface.co/datasets/deepmind/code_contests) | Competitive-programming tests | Harder coding RL |
-| [TACO](https://huggingface.co/datasets/BAAI/TACO) | Executable checks | Coding RL |
-| [KodCode](https://huggingface.co/datasets?search=KodCode) | Problems with test-based verification | Programmatic RL rewards (search link; confirm canonical repo) ⚠️ |
-| [LiveCodeBench](https://github.com/LiveCodeBench/LiveCodeBench) 🧪 | Time-separated problems with tests | Held-out evaluation |
-| [SWE-Gym](https://github.com/SWE-Gym/SWE-Gym) | Repository tests, task outcomes | Agentic coding RL |
-| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | Generated repository tasks and environments | Scaling task generation |
-| [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | Containerized terminal tasks | Terminal-agent RL and evaluation |
-| [DeepCoder Preview](https://huggingface.co/datasets/agentica-org/DeepCoder-Preview-Dataset) | Verifiable competitive-programming problems | Code RL |
-| [SWE-bench Multilingual](https://github.com/SWE-bench/SWE-bench) 🧪 | Multilingual software repair tasks | Cross-language generalization |
-| [R2E-Gym](https://github.com/R2E-Gym/R2E-Gym) | Executable repo-level environments | Coding RL and SFT |
-| [SWE-rebench](https://huggingface.co/datasets/nebius/SWE-rebench) | Reconstructed software engineering tasks | Training/validation with exclusions |
-| [Longtail-SWE](https://huggingface.co/datasets/nebius/Longtail-SWE) | Difficult software tasks | Hard-task generation and evaluation |
-| [Harbor](https://github.com/laude-institute/harbor) | Environment execution and grading infrastructure | Generates trajectories; not itself a dataset |
-| [CodeBenchGen](https://github.com/THUDM/CodeBenchGen) | Generated executable coding tasks | Scalable program verification |
+| Dataset / environment | Size | Verification | Role |
+| ---- | ---- | ---- | ---- |
+| [APPS](https://huggingface.co/datasets/codeparrot/apps) | 10K problems | Execution against test cases | Coding RL |
+| [CodeContests](https://huggingface.co/datasets/deepmind/code_contests) | ~13K problems | Competitive-programming tests | Harder coding RL |
+| [TACO](https://huggingface.co/datasets/BAAI/TACO) | ~26K problems | Executable checks | Coding RL |
+| [KodCode](https://huggingface.co/datasets?search=KodCode) | ~447K | Problems with test-based verification | Programmatic RL rewards (search link; confirm canonical repo) ⚠️ |
+| [LiveCodeBench](https://github.com/LiveCodeBench/LiveCodeBench) 🧪 | 1,000+ (rolling) | Time-separated problems with tests | Held-out evaluation |
+| [SWE-Gym](https://github.com/SWE-Gym/SWE-Gym) | 2,438 instances | Repository tests, task outcomes | Agentic coding RL |
+| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | ~50K task instances | Generated repository tasks and environments | Scaling task generation |
+| [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | ~100 tasks | Containerized terminal tasks | Terminal-agent RL and evaluation |
+| [DeepCoder Preview](https://huggingface.co/datasets/agentica-org/DeepCoder-Preview-Dataset) | ~24K problems | Verifiable competitive-programming problems | Code RL |
+| [SWE-bench Multilingual](https://github.com/SWE-bench/SWE-bench) 🧪 | 300 tasks | Multilingual software repair tasks | Cross-language generalization |
+| [R2E-Gym](https://github.com/R2E-Gym/R2E-Gym) | ~8K tasks | Executable repo-level environments | Coding RL and SFT |
+| [SWE-rebench](https://huggingface.co/datasets/nebius/SWE-rebench) | 21K+ tasks | Reconstructed software engineering tasks | Training/validation with exclusions |
+| [Longtail-SWE](https://huggingface.co/datasets/nebius/Longtail-SWE) | — | Difficult software tasks | Hard-task generation and evaluation |
+| [Harbor](https://github.com/laude-institute/harbor) | — | Environment execution and grading infrastructure | Generates trajectories; not itself a dataset |
+| [CodeBenchGen](https://github.com/THUDM/CodeBenchGen) | — | Generated executable coding tasks | Scalable program verification |
 
 Track the strength of each test suite; passing visible tests is not the same as a correct solution.
 
@@ -423,11 +483,11 @@ Track the strength of each test suite; passing visible tests is not the same as 
 
 ##### Constraint following
 
-| Resource | Task | Reward |
-| -------- | ---- | ------ |
-| [IFEval](https://huggingface.co/datasets/google/IFEval) 🧪 | Instruction constraints | Programmatic compliance |
-| [Tülu RLVR IFEval](https://huggingface.co/datasets/allenai/RLVR-IFeval) | Instruction-following training tasks | Verifier-based |
-| [BFCL](https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard) | Function-call correctness | API call validation |
+| Resource | Size | Task | Reward |
+| ---- | ---- | ---- | ---- |
+| [IFEval](https://huggingface.co/datasets/google/IFEval) 🧪 | ~541 prompts | Instruction constraints | Programmatic compliance |
+| [Tülu RLVR IFEval](https://huggingface.co/datasets/allenai/RLVR-IFeval) | ~15K | Instruction-following training tasks | Verifier-based |
+| [BFCL](https://github.com/ShishirPatil/gorilla/tree/main/berkeley-function-call-leaderboard) | — | Function-call correctness | API call validation |
 
 These give fast, unambiguous feedback and are excellent for checking that an RL implementation works. They are not evidence of general agentic improvement.
 
@@ -437,51 +497,51 @@ The core artifact is a trajectory: `τ = (s0, a0, o1, a1, o2, …, aT, r)` with 
 
 ##### Software engineering agents
 
-| Resource | Provides | Use |
-| -------- | -------- | --- |
-| [SWE-Gym](https://github.com/SWE-Gym/SWE-Gym) | Repository tasks, sampled trajectories, verifier data | SFT and RL |
-| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | Scalable repository-level task generation | Expanding executable environments |
-| [SWE-bench](https://github.com/SWE-bench/SWE-bench) | Real issue-resolution tasks | Held-out evaluation, selected training splits |
-| [OpenHands SFT Trajectories](https://huggingface.co/datasets/SWE-Gym/OpenHands-SFT-Trajectories) | Agent-tool trajectories | Imitation learning |
-| [OpenHands Sampled Trajectories](https://huggingface.co/datasets/SWE-Gym/OpenHands-Sampled-Trajectories) | Multiple sampled attempts | Outcome filtering, offline learning |
-| [Open SWE Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | Agent interaction traces | Trajectory SFT |
-| [Nemotron SFT SWE v3](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3) | Software engineering agent data | Long-horizon SFT |
-| [daVinci-Agency](https://huggingface.co/datasets/GAIR/daVinci-Agency) | Small curated long-horizon examples | Long-horizon behavior study (value is structure, not scale) |
-| [NVIDIA SWE-Zero OpenHands](https://huggingface.co/datasets/nvidia/SWE-Zero-openhands-trajectories) | 318k OpenHands trajectories | SWE agent SFT |
-| [SWE-Hero OpenHands](https://huggingface.co/datasets/nvidia/SWE-Hero-openhands-trajectories) | 34k OpenHands trajectories | Higher-quality supervised agent learning |
-| [SWE-smith Trajectories](https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories) | 5,017 trajectories in the original training set | Repository issue resolution |
-| [Nebius SWE-agent Trajectories](https://huggingface.co/datasets/nebius/SWE-agent-trajectories) | Tens of thousands | SWE-agent execution and problem solving |
-| [SWE-rebench OpenHands](https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories) | ~67k trajectories | Repository repair, test-aware actions |
-| [R2E-Gym SFT](https://huggingface.co/datasets/R2E-Gym/R2EGym-SFT-Trajectories) | ~3k samples | Executed repository-level repairs |
-| [Klear SWE-smith 66k](https://huggingface.co/datasets/Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k) | ~66k, small agent scaffold | SWE SFT |
-| [Terminal-Bench 2 traces](https://huggingface.co/datasets/AlienKevin/terminal-bench-2-sft-traces) ⚠️ | Hundreds of traces | Terminal demonstrations; audit evaluation overlap |
-| [Longtail-SWE Trajectories](https://huggingface.co/datasets/nebius/Longtail-SWE-trajectories) | Hard software tasks | Failure analysis, challenging trajectories |
-| [Thoughtworks Agentic Coding Trajectories](https://huggingface.co/datasets/thoughtworks/agentic-coding-trajectories) | Multi-framework trace aggregation | Comparative agent behavior |
-| [SFT Benchmark Trajectories](https://huggingface.co/datasets/Heisenger/sft-benchmark-trajectories) | Multiple published trajectory sources | Comparison and normalization |
+| Resource | Size | Provides | Use |
+| ---- | ---- | ---- | ---- |
+| [SWE-Gym](https://github.com/SWE-Gym/SWE-Gym) | 2,438 instances | Repository tasks, sampled trajectories, verifier data | SFT and RL |
+| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | ~50K task instances | Scalable repository-level task generation | Expanding executable environments |
+| [SWE-bench](https://github.com/SWE-bench/SWE-bench) | 2,294 instances | Real issue-resolution tasks | Held-out evaluation, selected training splits |
+| [OpenHands SFT Trajectories](https://huggingface.co/datasets/SWE-Gym/OpenHands-SFT-Trajectories) | 491 trajectories | Agent-tool trajectories | Imitation learning |
+| [OpenHands Sampled Trajectories](https://huggingface.co/datasets/SWE-Gym/OpenHands-Sampled-Trajectories) | ~6K attempts | Multiple sampled attempts | Outcome filtering, offline learning |
+| [Open SWE Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | 200K+ trajectories | Agent interaction traces | Trajectory SFT |
+| [Nemotron SFT SWE v3](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3) | — | Software engineering agent data | Long-horizon SFT |
+| [daVinci-Agency](https://huggingface.co/datasets/GAIR/daVinci-Agency) | — | Small curated long-horizon examples | Long-horizon behavior study (value is structure, not scale) |
+| [NVIDIA SWE-Zero OpenHands](https://huggingface.co/datasets/nvidia/SWE-Zero-openhands-trajectories) | 318K trajectories | OpenHands trajectories | SWE agent SFT |
+| [SWE-Hero OpenHands](https://huggingface.co/datasets/nvidia/SWE-Hero-openhands-trajectories) | 34K trajectories | OpenHands trajectories | Higher-quality supervised agent learning |
+| [SWE-smith Trajectories](https://huggingface.co/datasets/SWE-bench/SWE-smith-trajectories) | 5,017 trajectories | Original training-set trajectories | Repository issue resolution |
+| [Nebius SWE-agent Trajectories](https://huggingface.co/datasets/nebius/SWE-agent-trajectories) | ~80K trajectories | Tens of thousands | SWE-agent execution and problem solving |
+| [SWE-rebench OpenHands](https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories) | ~67K trajectories | Repository repair trajectories | Repository repair, test-aware actions |
+| [R2E-Gym SFT](https://huggingface.co/datasets/R2E-Gym/R2EGym-SFT-Trajectories) | ~3K | Executed repository-level repairs | Executed repository-level repairs |
+| [Klear SWE-smith 66k](https://huggingface.co/datasets/Kwai-Klear/SWE-smith-mini_swe_agent_plus-trajectories-66k) | ~66K | Small agent scaffold trajectories | SWE SFT |
+| [Terminal-Bench 2 traces](https://huggingface.co/datasets/AlienKevin/terminal-bench-2-sft-traces) ⚠️ | 100s of traces | Hundreds of traces | Terminal demonstrations; audit evaluation overlap |
+| [Longtail-SWE Trajectories](https://huggingface.co/datasets/nebius/Longtail-SWE-trajectories) | — | Hard software tasks | Failure analysis, challenging trajectories |
+| [Thoughtworks Agentic Coding Trajectories](https://huggingface.co/datasets/thoughtworks/agentic-coding-trajectories) | — | Multi-framework trace aggregation | Comparative agent behavior |
+| [SFT Benchmark Trajectories](https://huggingface.co/datasets/Heisenger/sft-benchmark-trajectories) | — | Multiple published trajectory sources | Comparison and normalization |
 
 ##### General tool use and multi-domain agents
 
-| Resource | Environment / data | Use |
-| -------- | ------------------ | --- |
-| [AgentGym](https://github.com/woooodyy/AgentGym) | Multiple interactive agent environments | General agent RL; best treated as an environment-interface reference |
-| [AgentGym RL Data (ID)](https://huggingface.co/datasets/AgentGym/AgentGym-RL-Data-ID) | ~186K RL instances | Multi-domain agent training |
-| [ALFWorld](https://github.com/alfworld/alfworld) | Text-based household tasks | Planning, sequential action |
-| [WebArena](https://github.com/web-arena-x/webarena) | Web application environments | Browser agents |
-| [VisualWebArena](https://github.com/web-arena-x/visualwebarena) | Visual web tasks | Multimodal browser agents |
-| [BrowserGym](https://github.com/ServiceNow/BrowserGym) | Unified browser environments | Browser-agent RL and benchmarking |
-| [ToolBench](https://github.com/OpenBMB/ToolBench) | Tool-use instructions and API interactions | Tool-call SFT |
-| [API-Bank](https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/api-bank) | API invocation conversations | Tool planning and calling |
-| [τ²-Bench](https://github.com/sierra-research/tau2-bench) | Stateful customer-service environments | Multi-turn tool agents |
-| [BFCL](https://github.com/ShishirPatil/gorilla) | Function-calling evaluation | Tool-call correctness |
+| Resource | Size | Environment / data | Use |
+| ---- | ---- | ---- | ---- |
+| [AgentGym](https://github.com/woooodyy/AgentGym) | — | Multiple interactive agent environments | General agent RL; best treated as an environment-interface reference |
+| [AgentGym RL Data (ID)](https://huggingface.co/datasets/AgentGym/AgentGym-RL-Data-ID) | ~186K instances | RL instances | Multi-domain agent training |
+| [ALFWorld](https://github.com/alfworld/alfworld) | 3,553 train tasks | Text-based household tasks | Planning, sequential action |
+| [WebArena](https://github.com/web-arena-x/webarena) | 812 tasks | Web application environments | Browser agents |
+| [VisualWebArena](https://github.com/web-arena-x/visualwebarena) | 910 tasks | Visual web tasks | Multimodal browser agents |
+| [BrowserGym](https://github.com/ServiceNow/BrowserGym) | — | Unified browser environments | Browser-agent RL and benchmarking |
+| [ToolBench](https://github.com/OpenBMB/ToolBench) | ~126K instances, 16K+ APIs | Tool-use instructions and API interactions | Tool-call SFT |
+| [API-Bank](https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/api-bank) | 314 dialogues | API invocation conversations | Tool planning and calling |
+| [τ²-Bench](https://github.com/sierra-research/tau2-bench) | — | Stateful customer-service environments | Multi-turn tool agents |
+| [BFCL](https://github.com/ShishirPatil/gorilla) | — | Function-calling evaluation | Tool-call correctness |
 
 ##### Deep research and long-horizon execution
 
-| Resource | Capability | Role |
-| -------- | ---------- | ---- |
-| [OpenResearcher Dataset](https://huggingface.co/datasets/OpenResearcher/OpenResearcher-Dataset) | ~97K research trajectories | Search and evidence-gathering SFT |
-| [Long-Horizon-Execution](https://huggingface.co/datasets/arvindh75/Long-Horizon-Execution) | Synthetic multi-step execution | Long-horizon diagnostics |
-| [KLong](https://huggingface.co/papers/2602.17547) ⚠️ | Long-horizon reasoning research | Methodology reference; dataset access unverified |
-| [Research-Factory](https://huggingface.co/papers/2603.20278) ⚠️ | Long-horizon research generation | Methodology reference; confirm released artifacts |
+| Resource | Size | Capability | Role |
+| ---- | ---- | ---- | ---- |
+| [OpenResearcher Dataset](https://huggingface.co/datasets/OpenResearcher/OpenResearcher-Dataset) | ~97K trajectories | Research trajectories | Search and evidence-gathering SFT |
+| [Long-Horizon-Execution](https://huggingface.co/datasets/arvindh75/Long-Horizon-Execution) | — | Synthetic multi-step execution | Long-horizon diagnostics |
+| [KLong](https://huggingface.co/papers/2602.17547) ⚠️ | — | Long-horizon reasoning research | Methodology reference; dataset access unverified |
+| [Research-Factory](https://huggingface.co/papers/2603.20278) ⚠️ | — | Long-horizon research generation | Methodology reference; confirm released artifacts |
 
 ##### Static trajectories versus live environments
 
@@ -500,116 +560,116 @@ The core artifact is a trajectory: `τ = (s0, a0, o1, a1, o2, …, aT, r)` with 
 
 Search, navigation, extraction and multi-step web workflows. Static retrieval QA is not equivalent to live browsing, where pages go missing and tool calls change the environment.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [AgentTrek](https://huggingface.co/datasets/xlangai/AgentTrek) | ~52k synthetic trajectories from web tutorials | Web navigation |
-| [WebLINX](https://huggingface.co/datasets/McGill-NLP/WebLINX) | Multi-turn demonstrations with browser actions | Web interaction |
-| [Mind2Web](https://huggingface.co/datasets/osunlp/Mind2Web) | Human demonstrations across websites; [project](https://github.com/OSU-NLP-Group/Mind2Web) | Website navigation |
-| [WorkArena](https://github.com/ServiceNow/WorkArena) | Enterprise browser workflows with evaluators | Stateful web tasks |
-| [MiniWoB++](https://github.com/Farama-Foundation/miniwob-plusplus) | Simple browser interaction | UI-control RL |
-| [BRIGHT](https://huggingface.co/datasets/xlangai/BRIGHT) | Long-horizon, reasoning-intensive retrieval | Retrieval supervision and evaluation |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [AgentTrek](https://huggingface.co/datasets/xlangai/AgentTrek) | ~52K trajectories | Synthetic trajectories from web tutorials | Web navigation |
+| [WebLINX](https://huggingface.co/datasets/McGill-NLP/WebLINX) | 2.3K demonstrations (~100K turns) | Multi-turn demonstrations with browser actions | Web interaction |
+| [Mind2Web](https://huggingface.co/datasets/osunlp/Mind2Web) | 2,350 tasks, 137 sites | Human demonstrations across websites; [project](https://github.com/OSU-NLP-Group/Mind2Web) | Website navigation |
+| [WorkArena](https://github.com/ServiceNow/WorkArena) | 33 task types (~19.9K instances) | Enterprise browser workflows with evaluators | Stateful web tasks |
+| [MiniWoB++](https://github.com/Farama-Foundation/miniwob-plusplus) | ~100 environments | Simple browser interaction | UI-control RL |
+| [BRIGHT](https://huggingface.co/datasets/xlangai/BRIGHT) | 1,384 queries | Long-horizon, reasoning-intensive retrieval | Retrieval supervision and evaluation |
 
 ##### Desktop, GUI and mobile agents
 
 Screenshots, accessibility trees, pointer and key actions. Distinguish grounding samples (screenshot → target), action demonstrations, full trajectories and executable tasks with state-based verifiers.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [AgentNet](https://huggingface.co/datasets/xlangai/AgentNet) | 22.6k human-annotated desktop tasks (Windows, macOS, Ubuntu) | Multimodal agent SFT |
-| [Ubuntu OSWorld Trajectories](https://huggingface.co/datasets/xlangai/ubuntu_osworld2_trajs) | Executed desktop task traces | Supervised agent learning |
-| [Verified OSWorld Trajectories](https://huggingface.co/datasets/xlangai/ubuntu_osworld_verified_trajs) | Verified computer-use executions | Supervised agent learning |
-| [OSWorld 2.0 Trajectories](https://huggingface.co/datasets/xlangai/osworld2.0-trajectory) | Newer computer-control tasks | Supervised agent learning |
-| [CUA-Gym](https://huggingface.co/datasets/xlangai/CUA-Gym) | Computer-use agent training | Computer-use RL/SFT |
-| [Aguvis Stage 1](https://huggingface.co/datasets/xlangai/aguvis-stage1) | Visual grounding and computer use | GUI grounding |
-| [Aguvis Stage 2](https://huggingface.co/datasets/xlangai/aguvis-stage2) | Multi-step GUI behavior | GUI planning and action |
-| [AndroidControl](https://huggingface.co/datasets/google-research-datasets/AndroidControl) | Android UI commands and screenshots | Mobile agents |
-| [Android in the Wild](https://github.com/google-research/google-research/tree/master/android_in_the_wild) | Large-scale Android action traces | Mobile agents |
-| [GUI-Odyssey](https://github.com/OpenGVLab/GUI-Odyssey) | Cross-app mobile trajectories | Mobile agents |
-| [Computer Agent Arena](https://huggingface.co/datasets/xlangai/computer-agent-arena) | Computer-use task data | Computer-use agents |
-| [SeeClick](https://github.com/njucckevin/SeeClick) | Visual GUI grounding | GUI grounding |
-| [OS-Atlas](https://github.com/OS-Copilot/OS-Atlas) | Screenshot/action grounding | GUI grounding |
-| [OSWorld](https://github.com/xlang-ai/OSWorld) 🧪 | Executable desktop tasks (including OSWorld 2) | Mainly evaluation |
-| [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) 🧪 | Challenging element grounding | Reserve for evaluation |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [AgentNet](https://huggingface.co/datasets/xlangai/AgentNet) | 22.6K tasks | Human-annotated desktop tasks (Windows, macOS, Ubuntu) | Multimodal agent SFT |
+| [Ubuntu OSWorld Trajectories](https://huggingface.co/datasets/xlangai/ubuntu_osworld2_trajs) | — | Executed desktop task traces | Supervised agent learning |
+| [Verified OSWorld Trajectories](https://huggingface.co/datasets/xlangai/ubuntu_osworld_verified_trajs) | — | Verified computer-use executions | Supervised agent learning |
+| [OSWorld 2.0 Trajectories](https://huggingface.co/datasets/xlangai/osworld2.0-trajectory) | — | Newer computer-control tasks | Supervised agent learning |
+| [CUA-Gym](https://huggingface.co/datasets/xlangai/CUA-Gym) | — | Computer-use agent training | Computer-use RL/SFT |
+| [Aguvis Stage 1](https://huggingface.co/datasets/xlangai/aguvis-stage1) | — | Visual grounding and computer use | GUI grounding |
+| [Aguvis Stage 2](https://huggingface.co/datasets/xlangai/aguvis-stage2) | — | Multi-step GUI behavior | GUI planning and action |
+| [AndroidControl](https://huggingface.co/datasets/google-research-datasets/AndroidControl) | ~15K tasks | Android UI commands and screenshots | Mobile agents |
+| [Android in the Wild](https://github.com/google-research/google-research/tree/master/android_in_the_wild) | 715K episodes | Large-scale Android action traces | Mobile agents |
+| [GUI-Odyssey](https://github.com/OpenGVLab/GUI-Odyssey) | 7,735 episodes | Cross-app mobile trajectories | Mobile agents |
+| [Computer Agent Arena](https://huggingface.co/datasets/xlangai/computer-agent-arena) | — | Computer-use task data | Computer-use agents |
+| [SeeClick](https://github.com/njucckevin/SeeClick) | — | Visual GUI grounding | GUI grounding |
+| [OS-Atlas](https://github.com/OS-Copilot/OS-Atlas) | ~13M elements, 2.3M screenshots | Screenshot/action grounding | GUI grounding |
+| [OSWorld](https://github.com/xlang-ai/OSWorld) 🧪 | 369 tasks | Executable desktop tasks (including OSWorld 2) | Mainly evaluation |
+| [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) 🧪 | 1,581 samples | Challenging element grounding | Reserve for evaluation |
 
 ##### Stateful applications, databases and enterprise agents
 
 Success depends on the final environment state, not a plausible answer.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [AppWorld](https://github.com/StonyBrookNLP/appworld) | Multiple apps, 457 APIs, stateful tasks | Training environment and RL |
-| [τ-bench](https://github.com/sierra-research/tau-bench) | Customer-support policies and tools | Stateful tool-use |
-| [ToolSandbox](https://github.com/apple/ToolSandbox) | Stateful tool calling with hidden dependencies | Tool reasoning |
-| [EnterpriseOps-Gym](https://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym) | Enterprise operations tasks | Agent RL and evaluation |
-| [GitLab Tasks](https://huggingface.co/datasets/ServiceNow-AI/gitlab-tasks) | GitLab operations | Development workflow agents |
-| [ERPNext Tasks](https://huggingface.co/datasets/ServiceNow-AI/erpnext-tasks) | Business operations | Enterprise agent actions |
-| [ServiceNow Tasks](https://huggingface.co/datasets/ServiceNow-AI/servicenow-tasks) | Ticketing and service management | Stateful enterprise tasks |
-| [Spider 2.0 / Spider2-V](https://github.com/xlang-ai/Spider2) | Enterprise-scale SQL and data workflows; visual data interaction | Data-engineering agents |
-| [Spider2-Lite](https://huggingface.co/datasets/xlangai/spider2-lite) | Data-engineering problems | Evaluation and task generation |
-| [Spider2 LocalDB](https://huggingface.co/datasets/xlangai/spider2-localdb) | Local database tasks | Executable data workflows |
-| [BigCode Evaluation Harness](https://github.com/bigcode-project/bigcode-evaluation-harness) | Code/test tasks | Build additional verified environments |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [AppWorld](https://github.com/StonyBrookNLP/appworld) | 750 tasks, 457 APIs | Multiple apps, 457 APIs, stateful tasks | Training environment and RL |
+| [τ-bench](https://github.com/sierra-research/tau-bench) | 165 tasks | Customer-support policies and tools | Stateful tool-use |
+| [ToolSandbox](https://github.com/apple/ToolSandbox) | 1,032 scenarios | Stateful tool calling with hidden dependencies | Tool reasoning |
+| [EnterpriseOps-Gym](https://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym) | — | Enterprise operations tasks | Agent RL and evaluation |
+| [GitLab Tasks](https://huggingface.co/datasets/ServiceNow-AI/gitlab-tasks) | — | GitLab operations | Development workflow agents |
+| [ERPNext Tasks](https://huggingface.co/datasets/ServiceNow-AI/erpnext-tasks) | — | Business operations | Enterprise agent actions |
+| [ServiceNow Tasks](https://huggingface.co/datasets/ServiceNow-AI/servicenow-tasks) | — | Ticketing and service management | Stateful enterprise tasks |
+| [Spider 2.0 / Spider2-V](https://github.com/xlang-ai/Spider2) | 632 problems (Spider2-V: 494) | Enterprise-scale SQL and data workflows; visual data interaction | Data-engineering agents |
+| [Spider2-Lite](https://huggingface.co/datasets/xlangai/spider2-lite) | 547 tasks | Data-engineering problems | Evaluation and task generation |
+| [Spider2 LocalDB](https://huggingface.co/datasets/xlangai/spider2-localdb) | — | Local database tasks | Executable data workflows |
+| [BigCode Evaluation Harness](https://github.com/bigcode-project/bigcode-evaluation-harness) | — | Code/test tasks | Build additional verified environments |
 
 ##### Planning, interactive reasoning and simulated worlds
 
 Environments whose solutions are computed or checked by code let a policy act and receive feedback instead of replaying teacher demonstrations.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [ScienceWorld](https://github.com/allenai/ScienceWorld) | Scientific experimentation and procedural reasoning | Planning RL |
-| [WebShop](https://github.com/princeton-nlp/WebShop) | Shopping and task planning under constraints | Online RL |
-| [TextWorld](https://github.com/microsoft/TextWorld) | Text-based interactive world modeling | Interactive RL |
-| [AgentBench](https://github.com/THUDM/AgentBench) 🧪 | Interactive environments across several domains | Evaluation |
-| [MINT-Bench](https://github.com/OSU-NLP-Group/MINT) 🧪 | Multi-turn interaction and feedback | Evaluation |
-| [AgentInstruct](https://huggingface.co/datasets/zai-org/AgentInstruct) | Agent trajectories across virtual environments | Agent SFT |
-| [TaskTrove](https://huggingface.co/datasets/open-thoughts/TaskTrove) | ~1.9M agentic task examples | Generation and practice seeds |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [ScienceWorld](https://github.com/allenai/ScienceWorld) | 30 task types | Scientific experimentation and procedural reasoning | Planning RL |
+| [WebShop](https://github.com/princeton-nlp/WebShop) | ~12K instructions, 1.18M products | Shopping and task planning under constraints | Online RL |
+| [TextWorld](https://github.com/microsoft/TextWorld) | — | Text-based interactive world modeling | Interactive RL |
+| [AgentBench](https://github.com/THUDM/AgentBench) 🧪 | 8 environments | Interactive environments across several domains | Evaluation |
+| [MINT-Bench](https://github.com/OSU-NLP-Group/MINT) 🧪 | — | Multi-turn interaction and feedback | Evaluation |
+| [AgentInstruct](https://huggingface.co/datasets/zai-org/AgentInstruct) | 1,866 trajectories | Agent trajectories across virtual environments | Agent SFT |
+| [TaskTrove](https://huggingface.co/datasets/open-thoughts/TaskTrove) | ~1.9M | Agentic task examples | Generation and practice seeds |
 
 ##### Long-context, memory and retrieval
 
 Weaker ecosystem than coding agents; persistent memory typically needs generated longitudinal tasks.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [Agent Data Collection](https://huggingface.co/datasets/neulab/agent-data-collection) | Web, knowledge-base, software and household agent traces | Cross-domain agent training |
-| [ServiceNow documentation](https://huggingface.co/datasets/ServiceNow-AI/servicenow-docs) | Grounded enterprise question answering | Retrieval and tool-use task generation |
-| [GitLab documentation](https://huggingface.co/datasets/ServiceNow-AI/gitlab-docs) | Tool/API documentation | Technical agent learning |
-| [LongBench](https://huggingface.co/datasets/THUDM/LongBench) 🧪 | Long-context understanding | Primarily evaluation |
-| [LongBench v2](https://huggingface.co/datasets/THUDM/LongBench-v2) 🧪 | Long-context reasoning | Reserve for evaluation |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Agent Data Collection](https://huggingface.co/datasets/neulab/agent-data-collection) | — | Web, knowledge-base, software and household agent traces | Cross-domain agent training |
+| [ServiceNow documentation](https://huggingface.co/datasets/ServiceNow-AI/servicenow-docs) | — | Grounded enterprise question answering | Retrieval and tool-use task generation |
+| [GitLab documentation](https://huggingface.co/datasets/ServiceNow-AI/gitlab-docs) | — | Tool/API documentation | Technical agent learning |
+| [LongBench](https://huggingface.co/datasets/THUDM/LongBench) 🧪 | 4,750 instances | Long-context understanding | Primarily evaluation |
+| [LongBench v2](https://huggingface.co/datasets/THUDM/LongBench-v2) 🧪 | 503 questions | Long-context reasoning | Reserve for evaluation |
 
 ##### Embodied and robotics agents
 
 Synchronized vision, proprioception, actions and outcomes, normally for a separate vision-language-action model or action head. Reuse depends on each dataset's permissions and the target robot's action space.
 
-| Dataset | Content | Use |
-| ---- | ---- | ---- |
-| [Open X-Embodiment](https://robotics-transformer-x.github.io/) | Large cross-robot manipulation corpus | Manipulation pretraining |
-| [DROID](https://droid-dataset.github.io/) | ~76k real-world manipulation demonstrations | Manipulation imitation |
-| [LeRobot datasets](https://huggingface.co/lerobot) | Standardized robot demonstration collections | Imitation learning |
-| [AgiBot World](https://agibot-world.com/) ⚠️ | Large-scale humanoid and dual-arm demonstrations | Humanoid manipulation |
-| [robomimic](https://github.com/ARISE-Initiative/robomimic) | Imitation-learning demonstrations | Imitation learning |
-| [LIBERO](https://libero-project.github.io/) | Long-horizon manipulation tasks | Lifelong robot learning |
-| [ManiSkill](https://github.com/haosulab/ManiSkill) | Simulation-based robot skill learning | Simulated RL |
-| [RoboCasa](https://github.com/robocasa/robocasa) | Household robot simulation | Simulated RL |
-| [BEHAVIOR-1K](https://behavior.stanford.edu/) | Long-horizon household activities | Embodied planning |
-| [MimicGen](https://github.com/ARISE-Initiative/MimicGen) | Synthetic robot demonstrations | Data generation |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Open X-Embodiment](https://robotics-transformer-x.github.io/) | 1M+ trajectories, 22 embodiments | Large cross-robot manipulation corpus | Manipulation pretraining |
+| [DROID](https://droid-dataset.github.io/) | ~76K trajectories | Real-world manipulation demonstrations | Manipulation imitation |
+| [LeRobot datasets](https://huggingface.co/lerobot) | — | Standardized robot demonstration collections | Imitation learning |
+| [AgiBot World](https://agibot-world.com/) ⚠️ | 1M+ trajectories | Large-scale humanoid and dual-arm demonstrations | Humanoid manipulation |
+| [robomimic](https://github.com/ARISE-Initiative/robomimic) | — | Imitation-learning demonstrations | Imitation learning |
+| [LIBERO](https://libero-project.github.io/) | 130 tasks | Long-horizon manipulation tasks | Lifelong robot learning |
+| [ManiSkill](https://github.com/haosulab/ManiSkill) | — | Simulation-based robot skill learning | Simulated RL |
+| [RoboCasa](https://github.com/robocasa/robocasa) | 100 tasks | Household robot simulation | Simulated RL |
+| [BEHAVIOR-1K](https://behavior.stanford.edu/) | 1,000 activities | Long-horizon household activities | Embodied planning |
+| [MimicGen](https://github.com/ARISE-Initiative/MimicGen) | 50K+ demos | Synthetic robot demonstrations | Data generation |
 
 #### Safety and defensive alignment
 
 Pair refusal examples with harmless requests that should be answered normally, or refusal training turns into over-refusal.
 
-| Dataset | Purpose | Role |
-| ------- | ------- | ---- |
-| [PKU-SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) | Helpfulness and harmlessness preferences | Safety preference training |
-| [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails) | Harmful-request/response classifications | Safety model training |
-| [WildGuardMix](https://huggingface.co/datasets/allenai/wildguardmix) | Prompt harmfulness, response safety, refusal detection | Safety classifier training |
-| [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat) | Toxicity in user interactions | Input classification |
-| [XSTest](https://huggingface.co/datasets/allenai/xstest-response) 🧪 | Safe requests that may trigger refusals | Over-refusal evaluation |
-| [OR-Bench](https://huggingface.co/datasets/bench-llm/or-bench) 🧪 | Over-refusal behavior | Safety evaluation |
-| [HarmBench](https://github.com/centerforaisafety/HarmBench) 🧪 | Robustness to adversarial requests | Defensive red-team evaluation |
-| [JailbreakBench](https://github.com/JailbreakBench/jailbreakbench) 🧪 | Standardized jailbreak robustness | Defensive evaluation |
-| [AgentDojo](https://github.com/ethz-spylab/agentdojo) 🧪 | Prompt-injection attacks against tool-using agents | Agent robustness evaluation |
-| [Nemotron Agentic Safety](https://huggingface.co/datasets/nvidia/Nemotron-AIQ-Agentic-Safety-Dataset-1.0) | Agentic safety judgments and examples | Agent safety post-training |
-| [PyRIT](https://github.com/microsoft/pyrit) | Red-team scenario generation and safety testing | Defensive evaluation tooling |
-| [Inspect AI](https://github.com/UKGovernmentBEIS/inspect_ai) | Security and agent evaluation infrastructure | Evaluation tooling |
+| Dataset | Size | Purpose | Role |
+| ---- | ---- | ---- | ---- |
+| [PKU-SafeRLHF](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) | ~83K (v1) | Helpfulness and harmlessness preferences | Safety preference training |
+| [BeaverTails](https://huggingface.co/datasets/PKU-Alignment/BeaverTails) | ~330K QA pairs | Harmful-request/response classifications | Safety model training |
+| [WildGuardMix](https://huggingface.co/datasets/allenai/wildguardmix) | ~92K | Prompt harmfulness, response safety, refusal detection | Safety classifier training |
+| [ToxicChat](https://huggingface.co/datasets/lmsys/toxic-chat) | ~10K | Toxicity in user interactions | Input classification |
+| [XSTest](https://huggingface.co/datasets/allenai/xstest-response) 🧪 | 450 prompts | Safe requests that may trigger refusals | Over-refusal evaluation |
+| [OR-Bench](https://huggingface.co/datasets/bench-llm/or-bench) 🧪 | ~80K prompts | Over-refusal behavior | Safety evaluation |
+| [HarmBench](https://github.com/centerforaisafety/HarmBench) 🧪 | 400 behaviors | Robustness to adversarial requests | Defensive red-team evaluation |
+| [JailbreakBench](https://github.com/JailbreakBench/jailbreakbench) 🧪 | 100 behaviors | Standardized jailbreak robustness | Defensive evaluation |
+| [AgentDojo](https://github.com/ethz-spylab/agentdojo) 🧪 | 97 tasks, 629 security cases | Prompt-injection attacks against tool-using agents | Agent robustness evaluation |
+| [Nemotron Agentic Safety](https://huggingface.co/datasets/nvidia/Nemotron-AIQ-Agentic-Safety-Dataset-1.0) | — | Agentic safety judgments and examples | Agent safety post-training |
+| [PyRIT](https://github.com/microsoft/pyrit) | — | Red-team scenario generation and safety testing | Defensive evaluation tooling |
+| [Inspect AI](https://github.com/UKGovernmentBEIS/inspect_ai) | — | Security and agent evaluation infrastructure | Evaluation tooling |
 
 Label semantics differ (preferences vs. moderation labels); do not mix these sets without an explicit label-conversion policy.
 
@@ -617,14 +677,14 @@ Label semantics differ (preferences vs. moderation labels); do not mix these set
 
 Most open datasets are static. Continual learning needs time-ordered tasks, freshly generated examples, feedback and explicit retention tests.
 
-| Resource | Measures | Use |
-| -------- | -------- | --- |
-| [TiC-LM](https://aclanthology.org/2025.acl-long.1551/) 🧪 | Temporal updates vs. retention in continued pretraining | Time-aware pretraining |
-| [TRACE](https://github.com/BeyonderXX/TRACE) 🧪 | Sequential adaptation across diverse tasks | Forgetting and transfer |
-| [Long-Horizon-Execution](https://huggingface.co/datasets/arvindh75/Long-Horizon-Execution) | Degradation over extended executions | Agent endurance, state tracking |
-| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | Task generation across repositories | Continually refreshed practice |
-| [AgentGym](https://github.com/woooodyy/AgentGym) | Repeated interactive task solving | Online policy improvement |
-| [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | Executable terminal tasks | Continual task evaluation |
+| Resource | Size | Measures | Use |
+| ---- | ---- | ---- | ---- |
+| [TiC-LM](https://aclanthology.org/2025.acl-long.1551/) 🧪 | — | Temporal updates vs. retention in continued pretraining | Time-aware pretraining |
+| [TRACE](https://github.com/BeyonderXX/TRACE) 🧪 | 8 tasks | Sequential adaptation across diverse tasks | Forgetting and transfer |
+| [Long-Horizon-Execution](https://huggingface.co/datasets/arvindh75/Long-Horizon-Execution) | — | Degradation over extended executions | Agent endurance, state tracking |
+| [SWE-smith](https://github.com/SWE-bench/SWE-smith) | ~50K task instances | Task generation across repositories | Continually refreshed practice |
+| [AgentGym](https://github.com/woooodyy/AgentGym) | — | Repeated interactive task solving | Online policy improvement |
+| [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | ~100 tasks | Executable terminal tasks | Continual task evaluation |
 
 STaR, ReST-EM, expert iteration, GRPO and self-play are **methods, not datasets**; the same raw data serves several of them.
 
@@ -654,32 +714,34 @@ Measure three outcomes separately: **plasticity** (learning new tasks), **retent
 
 Keep these out of training. Use three pools: a fixed **regression suite**, an untouched **generalization suite**, and a rolling **forward-time suite** drawn from genuinely new tasks.
 
-| Capability | Resource | Metric |
-| ---------- | -------- | ------ |
-| General knowledge | [MMLU-Pro](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro) | Accuracy |
-| General reasoning | [GPQA](https://huggingface.co/datasets/Idavidrein/gpqa) | Accuracy |
-| Mathematical reasoning | [GSM8K](https://huggingface.co/datasets/openai/gsm8k), [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | Answer correctness |
-| Live coding | [LiveCodeBench](https://github.com/LiveCodeBench/LiveCodeBench) | Execution pass rate |
-| Function calling | [BFCL](https://github.com/ShishirPatil/gorilla) | Call correctness |
-| Repository engineering | [SWE-bench Verified](https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified) | Resolved tasks |
-| Terminal use | [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | Task success |
-| Browser interaction | [WebArena](https://github.com/web-arena-x/webarena) | Goal completion |
-| Long-context retrieval | [RULER](https://github.com/NVIDIA/RULER) | Length-dependent accuracy |
-| Multilingual reasoning | [MMMLU](https://huggingface.co/datasets/openai/MMMLU) | Per-language accuracy |
-| Reward models | [RewardBench](https://huggingface.co/datasets/allenai/reward-bench) | Ranking accuracy |
-| Safety classification | [WildGuardTest](https://huggingface.co/datasets/allenai/wildguardmix) | Classification quality |
-| Refusal calibration | [XSTest](https://huggingface.co/datasets/allenai/xstest-response) | False refusal rate |
-| Continual pretraining | [TiC-LM](https://aclanthology.org/2025.acl-long.1551/) | Temporal adaptation and retention |
-| Desktop computer use | [OSWorld](https://github.com/xlang-ai/OSWorld) | Task completion |
-| Desktop computer use | [AgentNetBench](https://huggingface.co/datasets/xlangai/AgentNetBench) | Desktop agent evaluation |
-| GUI grounding | [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) | Grounding accuracy |
-| Enterprise browser workflows | [WorkArena](https://github.com/ServiceNow/WorkArena) | Task success |
-| Stateful customer/tool interaction | [τ²-bench](https://github.com/sierra-research/tau2-bench) | Task success |
-| Cross-domain interaction | [AgentBench](https://github.com/THUDM/AgentBench) | Task success |
-| Long-context understanding | [LongBench](https://huggingface.co/datasets/THUDM/LongBench) | Accuracy |
-| Long-context reasoning | [LongBench v2](https://huggingface.co/datasets/THUDM/LongBench-v2) | Accuracy |
-| Agent-trajectory judges | [AgentJudgeBench](https://huggingface.co/datasets/ServiceNow-AI/AgentJudgeBench) | Judge accuracy |
-| Prompt-injection resistance | [AgentDojo](https://github.com/ethz-spylab/agentdojo) | Attack success and utility |
+| Capability | Resource | Size | Metric |
+| ---- | ---- | ---- | ---- |
+| General knowledge | [MMLU-Pro](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro) | ~12K questions | Accuracy |
+| General reasoning | [GPQA](https://huggingface.co/datasets/Idavidrein/gpqa) | 448 questions | Accuracy |
+| Mathematical reasoning | [GSM8K](https://huggingface.co/datasets/openai/gsm8k), [MATH](https://huggingface.co/datasets/hendrycks/competition_math) | ~8.5K (1,319 test) / ~12.5K (5,000 test) | Answer correctness |
+| Live coding | [LiveCodeBench](https://github.com/LiveCodeBench/LiveCodeBench) | 1,000+ (rolling) | Execution pass rate |
+| Function calling | [BFCL](https://github.com/ShishirPatil/gorilla) | — | Call correctness |
+| Repository engineering | [SWE-bench Verified](https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified) | 500 tasks | Resolved tasks |
+| Terminal use | [Terminal-Bench](https://github.com/laude-institute/terminal-bench) | ~100 tasks | Task success |
+| Browser interaction | [WebArena](https://github.com/web-arena-x/webarena) | 812 tasks | Goal completion |
+| Long-context retrieval | [RULER](https://github.com/NVIDIA/RULER) | — | Length-dependent accuracy |
+| Multilingual reasoning | [MMMLU](https://huggingface.co/datasets/openai/MMMLU) | 14 languages | Per-language accuracy |
+| Reward models | [RewardBench](https://huggingface.co/datasets/allenai/reward-bench) | ~3K prompts | Ranking accuracy |
+| Safety classification | [WildGuardTest](https://huggingface.co/datasets/allenai/wildguardmix) | 1,725 | Classification quality |
+| Refusal calibration | [XSTest](https://huggingface.co/datasets/allenai/xstest-response) | 450 prompts | False refusal rate |
+| Continual pretraining | [TiC-LM](https://aclanthology.org/2025.acl-long.1551/) | — | Temporal adaptation and retention |
+| Desktop computer use | [OSWorld](https://github.com/xlang-ai/OSWorld) | 369 tasks | Task completion |
+| Desktop computer use | [AgentNetBench](https://huggingface.co/datasets/xlangai/AgentNetBench) | — | Desktop agent evaluation |
+| GUI grounding | [ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) | 1,581 samples | Grounding accuracy |
+| Enterprise browser workflows | [WorkArena](https://github.com/ServiceNow/WorkArena) | 33 task types (~19.9K instances) | Task success |
+| Stateful customer/tool interaction | [τ²-bench](https://github.com/sierra-research/tau2-bench) | — | Task success |
+| Cross-domain interaction | [AgentBench](https://github.com/THUDM/AgentBench) | 8 environments | Task success |
+| Long-context understanding | [LongBench](https://huggingface.co/datasets/THUDM/LongBench) | 4,750 instances | Accuracy |
+| Long-context reasoning | [LongBench v2](https://huggingface.co/datasets/THUDM/LongBench-v2) | 503 questions | Accuracy |
+| Agent-trajectory judges | [AgentJudgeBench](https://huggingface.co/datasets/ServiceNow-AI/AgentJudgeBench) | — | Judge accuracy |
+| Prompt-injection resistance | [AgentDojo](https://github.com/ethz-spylab/agentdojo) | 97 tasks, 629 security cases | Attack success and utility |
+| Humor generation | [SemEval 2026 MWAHAHA](https://pln-fing-udelar.github.io/semeval-2026-humor-gen/) | — | Constrained jokes in English, Spanish, Chinese and humorous GIF captions; human pairwise preferences |
+| Pun generation | [Phunny](https://huggingface.co/datasets/disi-unibo-nlp/Phunny) | 350 | Novel pun generation and resolution |
 
 Some sets appear in both training and evaluation literature. Training on MATH train problems is compatible with testing on held-out problems; training on your final test set invalidates the test.
 
@@ -696,38 +758,44 @@ Some sets appear in both training and evaluation literature. Training on MATH tr
 
 ### Pretraining
 
-| Dataset | Content | Notes |
-| ------- | ------- | ----- |
-| [HowTo100M](https://www.di.ens.fr/willow/research/howto100m/) | ~136M narrated instructional clips | ASR-derived captions are noisy; source-video rights apply ⚠️ |
-| [InternVid](https://huggingface.co/datasets/OpenGVLab/InternVid) | Large web video-text corpus with generated captions | Web-sourced; review terms ⚠️ |
-| [Panda-70M](https://snap-research.github.io/Panda-70M/) | ~70M captioned clips | Research use; source-video rights apply ⚠️ |
-| [HD-VILA-100M](https://github.com/microsoft/XPretrain) | ~100M high-resolution clip-text pairs | Research use ⚠️ |
-| [WebVid-10M](https://github.com/m-bain/webvid) | ~10M stock-footage video-caption pairs | Distribution has been restricted; verify availability ⚠️ |
-| [Kinetics-700](https://github.com/cvdfoundation/kinetics-dataset) | ~650K action-labeled clips, 700 classes | Action recognition pretraining |
-| [Something-Something v2](https://www.qualcomm.com/developer/software/something-something-v-2-dataset) | ~220K object-interaction clips | Temporal reasoning; license terms apply ⚠️ |
-| [Ego4D](https://ego4d-data.org/) 🔒 | Egocentric video with audio | Gated access |
+| Dataset | Size | Content | Notes |
+| ---- | ---- | ---- | ---- |
+| [HowTo100M](https://www.di.ens.fr/willow/research/howto100m/) | ~136M clips (1.2M videos) | Narrated instructional clips | ASR-derived captions are noisy; source-video rights apply ⚠️ |
+| [InternVid](https://huggingface.co/datasets/OpenGVLab/InternVid) | 7M videos, 234M clips | Large web video-text corpus with generated captions | Web-sourced; review terms ⚠️ |
+| [Panda-70M](https://snap-research.github.io/Panda-70M/) | ~70M clips | Captioned clips | Research use; source-video rights apply ⚠️ |
+| [HD-VILA-100M](https://github.com/microsoft/XPretrain) | ~100M clips | High-resolution clip-text pairs | Research use ⚠️ |
+| [WebVid-10M](https://github.com/m-bain/webvid) | ~10M | Stock-footage video-caption pairs | Distribution has been restricted; verify availability ⚠️ |
+| [Kinetics-700](https://github.com/cvdfoundation/kinetics-dataset) | ~650K clips | Action-labeled clips, 700 classes | Action recognition pretraining |
+| [Something-Something v2](https://www.qualcomm.com/developer/software/something-something-v-2-dataset) | ~220K clips | Object-interaction clips | Temporal reasoning; license terms apply ⚠️ |
+| [Ego4D](https://ego4d-data.org/) 🔒 | 3,670 h | Egocentric video with audio | Gated access |
 
 ### Mid-training
 
-| Dataset | Content | Notes |
-| ------- | ------- | ----- |
-| [OpenVid-1M](https://huggingface.co/datasets/nkp37/OpenVid-1M) | ~1M high-quality text-video pairs | Quality-filtered for text-to-video |
-| [Koala-36M](https://koala36m.github.io/) | ~36M clips with fine-grained captions and quality scoring | Curation reference ⚠️ |
-| [MiraData](https://github.com/mira-space/MiraData) | Long clips with structured captions | Motion strength and long-take focus ⚠️ |
+| Dataset | Size | Content | Notes |
+| ---- | ---- | ---- | ---- |
+| [OpenVid-1M](https://huggingface.co/datasets/nkp37/OpenVid-1M) | ~1M | High-quality text-video pairs | Quality-filtered for text-to-video |
+| [Koala-36M](https://koala36m.github.io/) | ~36M clips | Clips with fine-grained captions and quality scoring | Curation reference ⚠️ |
+| [MiraData](https://github.com/mira-space/MiraData) | 788K clips | Long clips with structured captions | Motion strength and long-take focus ⚠️ |
 
 ### Post-training
 
-| Dataset | Content | Use |
-| ------- | ------- | --- |
-| [LLaVA-Video-178K](https://huggingface.co/datasets/lmms-lab/LLaVA-Video-178K) ⚠️ | Video instruction-following data | Video-language SFT; includes model-generated annotations |
-| [VideoFeedback](https://huggingface.co/datasets/TIGER-Lab/VideoFeedback) | Human ratings of generated videos | Video quality reward models |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [LLaVA-Video-178K](https://huggingface.co/datasets/lmms-lab/LLaVA-Video-178K) ⚠️ | 178K videos, 1.3M samples | Video instruction-following data | Video-language SFT; includes model-generated annotations |
+| [VideoFeedback](https://huggingface.co/datasets/TIGER-Lab/VideoFeedback) | ~37.6K videos | Human ratings of generated videos | Video quality reward models |
+| [SMILE](https://github.com/kaist-ami/SMILE-Dataset) ⚠️ | 887 clips | Sitcom and TED clips | Understanding laughter in video |
+| [FunnyNet-W](https://link.springer.com/article/10.1007/s11263-024-02000-2) ⚠️ | — | Sitcom video, audio and subtitles | Funny-moment localization |
+| [MHD](https://delta-lab-iitk.github.io/Multimodal-Humor-Dataset/) ⚠️ | — | Sitcom laughter tracks | Laughter prediction |
+| [UR-FUNNY](https://github.com/declare-lab/ur-funny) ⚠️ | — | TED-talk segments with multimodal context | Humor from speech and delivery |
+| [MUStARD](https://lit.eecs.umich.edu/downloads.html) ⚠️ | — | Sitcom video, audio, text with context ([resources](https://github.com/soujanyaporia/MUStARD)) | Audiovisual sarcasm |
+| [MultiHuSE](https://arxiv.org/abs/2609.11322) ⚠️ | — | Multimodal humor styles and emotions; unverified paper link | Acting, delivery and affect |
 
 ### Evaluation
 
-| Resource | Measures |
-| -------- | -------- |
-| [VBench](https://github.com/Vchitect/VBench) 🧪 | Video generation quality across dimensions |
-| [Video-MME](https://video-mme.github.io/) 🧪 | Video understanding by multimodal models |
+| Resource | Size | Measures |
+| ---- | ---- | ---- |
+| [VBench](https://github.com/Vchitect/VBench) 🧪 | 16 dimensions | Video generation quality across dimensions |
+| [Video-MME](https://video-mme.github.io/) 🧪 | 900 videos, 2,700 QA | Video understanding by multimodal models |
 
 ## Audio and Speech
 
@@ -759,8 +827,8 @@ Very large corpora for representation learning and weakly supervised multilingua
 
 #### Largest speech corpora
 
-| Dataset | Scale | Best use | Access / licensing |
-| ------- | ----- | -------- | ------------------ |
+| Dataset | Size | Best use | Access / licensing |
+| ---- | ---- | ---- | ---- |
 | [YODAS v3](https://huggingface.co/datasets/espnet/yodas3) | 1.1M h, 147 languages | Multilingual pretraining, ASR, generation | CC BY 3.0 release; underlying web-source rights need review ⚠️ |
 | [NVIDIA Granary v2](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | 463k h, 48 languages | Multilingual ASR and speech translation | Labels under OpenMDW 1.1; original audio fetched and licensed separately |
 | [MOSEL](https://huggingface.co/datasets/FBK-MT/mosel) 🔗 | 444k h of pseudo-labels | Multilingual ASR | Overlaps source corpora; audio rights apply |
@@ -779,14 +847,14 @@ Very large corpora for representation learning and weakly supervised multilingua
 
 #### Audio-only speech pretraining
 
-| Dataset | Use |
-| ------- | --- |
-| [YODAS v3](https://huggingface.co/datasets/espnet/yodas3) | Large-scale multilingual representation learning |
-| [YODAS2](https://huggingface.co/datasets/espnet/yodas2) | Longer-context audio with timestamps |
-| [VoxPopuli unlabeled](https://github.com/facebookresearch/voxpopuli) | Multilingual self-supervised pretraining |
-| [Libri-Light](https://github.com/facebookresearch/libri-light) | English representations, speech-tokenizer training |
-| [LibriHeavy](https://github.com/k2-fsa/libriheavy) | Long-form LibriVox-derived ASR segments |
-| [Granary source collection](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | Pretraining after source-audio acquisition |
+| Dataset | Size | Use |
+| ---- | ---- | ---- |
+| [YODAS v3](https://huggingface.co/datasets/espnet/yodas3) | 1.1M h | Large-scale multilingual representation learning |
+| [YODAS2](https://huggingface.co/datasets/espnet/yodas2) | — | Longer-context audio with timestamps |
+| [VoxPopuli unlabeled](https://github.com/facebookresearch/voxpopuli) | ~400k h | Multilingual self-supervised pretraining |
+| [Libri-Light](https://github.com/facebookresearch/libri-light) | 60k+ h | English representations, speech-tokenizer training |
+| [LibriHeavy](https://github.com/k2-fsa/libriheavy) | ~50k h | Long-form LibriVox-derived ASR segments |
+| [Granary source collection](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | — | Pretraining after source-audio acquisition |
 
 ### Mid-training
 
@@ -796,8 +864,8 @@ Supervised corpora with trustworthy labels, grouped by task, followed by languag
 
 ##### General English and multilingual
 
-| Dataset | Size / coverage | Characteristics |
-| ------- | --------------- | --------------- |
+| Dataset | Size | Characteristics |
+| ---- | ---- | ---- |
 | [LibriSpeech](https://www.openslr.org/12/) | 960 h, English | Standard clean/other audiobook ASR |
 | [LibriSpeech-PC](https://www.openslr.org/145/) | ~960 h | Punctuated, capitalized labels |
 | [Multilingual LibriSpeech (MLS)](https://www.openslr.org/94/) | 50k+ h, 8 languages | Read speech |
@@ -807,20 +875,20 @@ Supervised corpora with trustworthy labels, grouped by task, followed by languag
 | [Granary v2](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | 463k h | Synthetic transcription and translation labels |
 | [MOSEL](https://huggingface.co/datasets/FBK-MT/mosel) 🔗 | 444k h | Multilingual pseudo-labels |
 | [YODAS v3](https://huggingface.co/datasets/espnet/yodas3) | 1.1M h | Weakly labeled, 48 kHz multichannel |
-| [OWSM v4 cleaned YODAS](https://huggingface.co/datasets/espnet/yodas_owsmv4) | Large multilingual subset | Cleaner YODAS training data |
+| [OWSM v4 cleaned YODAS](https://huggingface.co/datasets/espnet/yodas_owsmv4) | — | Cleaner YODAS training data |
 | [Mozilla Common Voice](https://commonvoice.mozilla.org/) | Multi-language, version-dependent | Crowdsourced read speech, CC0 releases |
 | [VoxPopuli](https://github.com/facebookresearch/voxpopuli) | ~1,800 labeled h; ~400k unlabeled h | European parliamentary speech |
 | [SPGISpeech](https://huggingface.co/datasets/kensho/spgispeech) ⚠️ | 5,000 h, English | Earnings calls; research-use agreement |
 | [TED-LIUM 3](https://www.openslr.org/51/) | ~450 h, English | Presentations and lectures |
 | [FLEURS](https://huggingface.co/datasets/google/fleurs) 🧪 | ~1,200 h, 102 languages | Multilingual evaluation and adaptation |
-| [ESB (Earnings-21/22 and others)](https://huggingface.co/datasets/esb/datasets) 🧪 | Smaller sets, accented financial speech | Primarily evaluation |
+| [ESB (Earnings-21/22 and others)](https://huggingface.co/datasets/esb/datasets) 🧪 | — | Primarily evaluation |
 
 LibriSpeech and MLS are comparatively straightforward audiobook corpora. GigaSpeech's access terms are stricter than its repository metadata suggests. Granary v2 is mostly labels and instructions that point to independently distributed audio.
 
 ##### Chinese, Arabic, Indic and other
 
-| Dataset | Scale / language | Notes |
-| ------- | ---------------- | ----- |
+| Dataset | Size | Notes |
+| ---- | ---- | ---- |
 | [THCHS-30](https://www.openslr.org/18/) | 30 h, Mandarin | Small clean baseline |
 | [AISHELL-1](https://www.openslr.org/33/) | 178 h, Mandarin | High-quality read speech |
 | [AISHELL-2](https://www.aishelltech.com/aishell_2) ⚠️ | ~1,000 h, Mandarin | Academic access restrictions |
@@ -837,39 +905,39 @@ LibriSpeech and MLS are comparatively straightforward audiobook corpora. GigaSpe
 
 TTS audio must preserve speaker identity, pronunciation, rate, prosody, pauses, microphone conditions and emotional style.
 
-| Dataset | Scale | Advantage |
-| ------- | ----- | --------- |
+| Dataset | Size | Advantage |
+| ---- | ---- | ---- |
 | [LJSpeech](https://keithito.com/LJ-Speech-Dataset/) | 24 h | Classic clean single-speaker English |
 | [LibriTTS](https://www.openslr.org/60/) | 585 h | Multi-speaker English with transcripts |
 | [LibriTTS-R](https://www.openslr.org/141/) | ~585 h | Restored audio quality |
 | [Hi-Fi TTS](https://www.openslr.org/109/) | ~292 h | High-quality multi-speaker audiobooks |
-| [HiFiTTS-2](https://huggingface.co/datasets/nvidia/hifitts-2) | Large multi-speaker corpus | Higher-bandwidth LibriVox-derived speech |
+| [HiFiTTS-2](https://huggingface.co/datasets/nvidia/hifitts-2) | ~36.7k h | Higher-bandwidth LibriVox-derived speech |
 | [VCTK](https://datashare.ed.ac.uk/handle/10283/3443) | ~44 h | 109 English speakers, accent diversity |
 | [AISHELL-3](https://www.openslr.org/93/) | 85 h | Mandarin multi-speaker |
-| [M-AILABS Speech Dataset](https://www.caito.de/2019/01/the-m-ailabs-speech-dataset/) | Multilingual | Audiobook speakers in several languages |
+| [M-AILABS Speech Dataset](https://www.caito.de/2019/01/the-m-ailabs-speech-dataset/) | ~1,000 h, 9 languages | Audiobook speakers in several languages |
 | [CSS10](https://github.com/Kyubyong/css10) | 10 languages | Single-speaker multilingual baseline |
-| [DataBaker](https://www.data-baker.com/data/index/source) | Mandarin | Phonetically balanced speech |
+| [DataBaker](https://www.data-baker.com/data/index/source) | — | Phonetically balanced speech |
 | [Emilia](https://huggingface.co/datasets/amphion/Emilia-Dataset) ⚠️ | 101.7k h | In-the-wild TTS; original hours non-commercial |
 | [Emilia-YODAS](https://huggingface.co/datasets/amphion/Emilia-Dataset) | 113.9k h | Six-language TTS; CC BY 4.0, subject to underlying rights |
 | [Emilia2](https://arxiv.org/abs/2611.13614) ⚠️ | 229k unique h | Long monologues and multi-speaker dialogue with timestamps, 4.77M style instructions, nonverbal labels |
 | [RealSpeech 350k](https://huggingface.co/datasets/TTS-AGI/tts-realspeech-multilingual-350k-moss-v2) 🔒 | 350k h | Speech, speaker features, codec tokens |
-| [Parler-TTS Data-Speech collection](https://huggingface.co/collections/parler-tts/open-source-speech-datasets-annotated-using-data-speech) | Several datasets | Natural-language voice/style descriptions |
+| [Parler-TTS Data-Speech collection](https://huggingface.co/collections/parler-tts/open-source-speech-datasets-annotated-using-data-speech) | — | Natural-language voice/style descriptions |
 | [Nord-Parl-TTS](https://huggingface.co/datasets/Aalto-Speech-Synthesis/Nord-Parl-TTS) 🔒⚠️ | ~5,990 h | Finnish and Swedish parliament speech |
 
 LJSpeech, LibriTTS(-R), VCTK and HiFiTTS are good first TTS corpora. Emilia's views (short utterances, monologues, dialogues) overlap and are not independent recordings; do not treat Emilia2 as commercially cleared before inspecting its final license and provenance.
 
 #### Swedish and Nordic speech
 
-| Dataset | Scale | Use | Licensing |
-| ------- | ----- | --- | --------- |
+| Dataset | Size | Use | Licensing |
+| ---- | ---- | ---- | ---- |
 | [RixVox](https://huggingface.co/datasets/KBLab/rixvox) | 5,500 h parliamentary speech, 2003–2023 | ASR, speaker modeling | CC BY 4.0. Transcripts are protocol-aligned, not always verbatim; verify before TTS use |
 | [Nord-Parl-TTS](https://huggingface.co/datasets/Aalto-Speech-Synthesis/Nord-Parl-TTS) | 5,090 h Swedish + 900 h Finnish | Nordic TTS | 🔒⚠️ CC BY-NC-ND 4.0, gated |
-| [KTH/NST Swedish ASR](https://huggingface.co/datasets/KTH/nst) | Swedish corpus | ASR | Check original language-bank terms |
-| [Waxholm](https://huggingface.co/datasets/KTH/waxholm) | Small dialogue corpus | Spoken dialogue, ASR research | Verify source terms |
-| [SpeechDat Swedish](https://huggingface.co/datasets/KTH/speechdat) | Telephone speech | Telephony ASR | Verify access and rights |
+| [KTH/NST Swedish ASR](https://huggingface.co/datasets/KTH/nst) | — | ASR | Check original language-bank terms |
+| [Waxholm](https://huggingface.co/datasets/KTH/waxholm) | — | Spoken dialogue, ASR research | Verify source terms |
+| [SpeechDat Swedish](https://huggingface.co/datasets/KTH/speechdat) | — | Telephony ASR | Verify access and rights |
 | [Common Voice Swedish](https://commonvoice.mozilla.org/) | Version-dependent | Read speech | CC0 |
 | [Swedish Common Voice processed](https://huggingface.co/datasets/LokaalHub/sv-SE-asr-cv) | Derived from CV22 | ASR | CC0 source; check processing |
-| [TTS-Swedish](https://huggingface.co/datasets/datadriven-company/TTS-Swedish) ⚠️ | Small/medium | Speech generation | Verify card license |
+| [TTS-Swedish](https://huggingface.co/datasets/datadriven-company/TTS-Swedish) ⚠️ | — | Speech generation | Verify card license |
 | [YodaLingua Swedish](https://huggingface.co/datasets/Thomcles/YodaLingua-Swedish) | Tens of thousands of samples | ASR/TTS | Verify provenance and license |
 | [Swedish Conversational Speech](https://huggingface.co/datasets/SpeechDataAI/swedish-conversational-speech) 🔒 | Advertised 500 h | Natural conversation | Paid license; audio not on HF |
 | [FLEURS Swedish](https://huggingface.co/datasets/google/fleurs) 🧪 | ~12 h | Evaluation | CC BY 4.0 |
@@ -877,30 +945,30 @@ LJSpeech, LibriTTS(-R), VCTK and HiFiTTS are good first TTS corpora. Emilia's vi
 
 #### Speaker identity, verification and diarization
 
-| Dataset | Purpose | Notes |
-| ------- | ------- | ----- |
-| [VoxCeleb1 and VoxCeleb2](https://mm.kaist.ac.kr/datasets/voxceleb/) ⚠️ | Speaker recognition and representation training | Research release with attribution; not blanket voice-cloning rights. [Original resources](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) |
-| [VoxConverse](https://mm.kaist.ac.kr/datasets/voxconverse/) | Diarization | Multispeaker natural recordings |
-| [AMI](https://groups.inf.ed.ac.uk/ami/corpus/) | Meeting diarization | Speaker turns and overlap |
-| [AliMeeting](https://www.openslr.org/119/) | Mandarin meeting diarization | Multiple microphones |
-| [DIHARD III](https://dihardchallenge.github.io/dihard3/) 🔒 | Diarization in difficult conditions | LDC-linked resources |
-| [CHiME-6](https://chimechallenge.github.io/chime6/) | Distant-microphone diarization | Real domestic conditions |
-| [Ego4D](https://ego4d-data.org/) 🔒 | Egocentric speaking and listening | Gated audiovisual source |
+| Dataset | Size | Purpose | Notes |
+| ---- | ---- | ---- | ---- |
+| [VoxCeleb1 and VoxCeleb2](https://mm.kaist.ac.kr/datasets/voxceleb/) ⚠️ | 7,363 speakers, 1M+ utterances | Speaker recognition and representation training | Research release with attribution; not blanket voice-cloning rights. [Original resources](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) |
+| [VoxConverse](https://mm.kaist.ac.kr/datasets/voxconverse/) | ~64 h | Diarization | Multispeaker natural recordings |
+| [AMI](https://groups.inf.ed.ac.uk/ami/corpus/) | ~100 h | Meeting diarization | Speaker turns and overlap |
+| [AliMeeting](https://www.openslr.org/119/) | ~119 h | Mandarin meeting diarization | Multiple microphones |
+| [DIHARD III](https://dihardchallenge.github.io/dihard3/) 🔒 | — | Diarization in difficult conditions | LDC-linked resources |
+| [CHiME-6](https://chimechallenge.github.io/chime6/) | ~50 h | Distant-microphone diarization | Real domestic conditions |
+| [Ego4D](https://ego4d-data.org/) 🔒 | 3,670 h | Egocentric speaking and listening | Gated audiovisual source |
 
 Also useful for speaker work: [RixVox](https://huggingface.co/datasets/KBLab/rixvox) (Swedish) and [Basis Conversations 1500](https://withbasis.co/open/conversations-1500) (multi-track).
 
 #### Speech translation and speech-to-speech
 
-| Dataset | Data type | Coverage |
-| ------- | --------- | -------- |
-| [CoVoST 2](https://ai.meta.com/tools/covost/) | Speech → translated text | 2,880 h, many pairs |
-| [MuST-C](https://ict.fbk.eu/must-c/) | Speech → translated text | TED speech with translations (v1 and v2) |
-| [Europarl-ST](https://www.mllp.upv.es/europarl-st/) | Multilingual speech translation | European parliament |
-| [CVSS](https://github.com/google-research-datasets/cvss) | Speech → translated speech | Common Voice-derived targets |
-| [SeamlessAlign](https://github.com/facebookresearch/seamless_communication) | Mined speech/text alignments | Very large multilingual |
-| [FLEURS](https://huggingface.co/datasets/google/fleurs) 🧪 | Parallel spoken content | 102-language benchmarking |
-| [VoxPopuli interpretations](https://huggingface.co/datasets/facebook/voxpopuli) | Simultaneous interpretation | Spoken language pairs |
-| [Granary v2 AST](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | Audio → translation instructions | Multilingual synthetic labels |
+| Dataset | Size | Data type | Coverage |
+| ---- | ---- | ---- | ---- |
+| [CoVoST 2](https://ai.meta.com/tools/covost/) | 2,880 h | Speech → translated text | Many language pairs |
+| [MuST-C](https://ict.fbk.eu/must-c/) | ~400+ h per language | Speech → translated text | TED speech with translations (v1 and v2) |
+| [Europarl-ST](https://www.mllp.upv.es/europarl-st/) | — | Multilingual speech translation | European parliament |
+| [CVSS](https://github.com/google-research-datasets/cvss) | — | Speech → translated speech | Common Voice-derived targets |
+| [SeamlessAlign](https://github.com/facebookresearch/seamless_communication) | ~470k h | Mined speech/text alignments | Very large multilingual |
+| [FLEURS](https://huggingface.co/datasets/google/fleurs) 🧪 | ~1,200 h | Parallel spoken content | 102-language benchmarking |
+| [VoxPopuli interpretations](https://huggingface.co/datasets/facebook/voxpopuli) | — | Simultaneous interpretation | Spoken language pairs |
+| [Granary v2 AST](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | — | Audio → translation instructions | Multilingual synthetic labels |
 
 Translations and synthesized target audio may carry different rights from the source recordings.
 
@@ -908,18 +976,18 @@ Translations and synthesized target audio may carry different rights from the so
 
 A model trained only on clean utterances fails on microphone noise, reverberation, overlapping speakers and background sound.
 
-| Dataset | Capability |
-| ------- | ---------- |
-| [Microsoft DNS Challenge](https://github.com/microsoft/DNS-Challenge) | Noise suppression; mixing infrastructure and license info |
-| [MUSAN](https://www.openslr.org/17/) | Music, speech, noise augmentation |
-| [WHAM! / WHAMR!](https://wham.whisper.ai/) | Noisy and reverberant speech separation |
-| [LibriMix](https://github.com/JorisCos/LibriMix) | Synthetic overlapping speech mixtures |
-| [VoiceBank + DEMAND](https://datashare.ed.ac.uk/handle/10283/1942) | Paired noisy/clean speech |
-| [DEMAND](https://zenodo.org/records/1227121) | Real environmental noise |
-| [AudioSet](https://research.google.com/audioset/) | Sound-event recognition |
-| [FSD50K](https://zenodo.org/records/4060432) | Environmental audio classification (mixed CC terms; filter per file) |
-| [Room impulse responses](https://www.openslr.org/28/) | Reverberation augmentation |
-| [URGENT Challenge data](https://urgent-challenge.github.io/urgent2025/data/) | Universal speech enhancement |
+| Dataset | Size | Capability |
+| ---- | ---- | ---- |
+| [Microsoft DNS Challenge](https://github.com/microsoft/DNS-Challenge) | — | Noise suppression; mixing infrastructure and license info |
+| [MUSAN](https://www.openslr.org/17/) | ~109 h | Music, speech, noise augmentation |
+| [WHAM! / WHAMR!](https://wham.whisper.ai/) | — | Noisy and reverberant speech separation |
+| [LibriMix](https://github.com/JorisCos/LibriMix) | — | Synthetic overlapping speech mixtures |
+| [VoiceBank + DEMAND](https://datashare.ed.ac.uk/handle/10283/1942) | ~11.6K train utterances | Paired noisy/clean speech |
+| [DEMAND](https://zenodo.org/records/1227121) | 18 environments | Real environmental noise |
+| [AudioSet](https://research.google.com/audioset/) | ~2M clips (~5.8k h) | Sound-event recognition |
+| [FSD50K](https://zenodo.org/records/4060432) | 51,197 clips (~108 h) | Environmental audio classification (mixed CC terms; filter per file) |
+| [Room impulse responses](https://www.openslr.org/28/) | — | Reverberation augmentation |
+| [URGENT Challenge data](https://urgent-challenge.github.io/urgent2025/data/) | — | Universal speech enhancement |
 
 ### Post-training
 
@@ -929,30 +997,30 @@ Style, interaction and instruction data that sit on top of a model that can alre
 
 ASR corpora give little supervision for delivery style, laughter, breathing, hesitations or pacing. Pipelines often strip these as noise, yet for natural generation they are the target.
 
-| Dataset | Capability | Access / caution |
-| ------- | ---------- | ---------------- |
-| [Basis Global Emotions](https://huggingface.co/datasets/basis-ai/basis-global-emotions) | Multilingual emotion and delivery, 525 h, 108 locales | Review dataset agreement |
-| [Expresso](https://huggingface.co/collections/parler-tts/parler-tts-expresso) | Expressive speech styles | Research corpus; inspect rights |
-| [Parler-TTS MLS annotations](https://huggingface.co/datasets/parler-tts/mls_eng_10k) | Voice descriptions, acoustic tags | MLS-derived; check version |
-| [Emilia-NV / NVSpeech](https://huggingface.co/datasets/amphion/Emilia-NV) | Laughter, breathing, interjections | Mandarin nonverbal annotations |
-| [NonverbalTTS](https://huggingface.co/datasets/deepvk/NonverbalTTS) | Breathing, sighing, coughing, laughing | ~17 h, English |
-| [Vocal Bursts](https://huggingface.co/datasets/TTS-AGI/vocal-bursts) | Non-speech human vocal sounds | Verify per-source licenses |
-| [ExpressiveSpeech](https://huggingface.co/datasets/FreedomIntelligence/ExpressiveSpeech) | Emotional conversational speech | Mixed-source lineage |
-| [CREMA-D](https://huggingface.co/datasets/CREMA-D/CREMA-D) ⚠️ | Emotion recognition/conditioning | Check original terms |
-| [RAVDESS](https://zenodo.org/records/1188976) | Acted emotional speech and song | Commercial license is separate |
-| [IEMOCAP](https://sail.usc.edu/iemocap/) 🔒 | Emotion, conversational prosody | Academic/request access |
-| [MSP-Podcast](https://ecs.utdallas.edu/research/researchlabs/msp-lab/MSP-Podcast.html) 🔒 | Natural speech emotions | Access approval |
-| [MSP-IMPROV](https://ecs.utdallas.edu/research/researchlabs/msp-lab/MSP-IMPROV.html) 🔒 | Improvised expressive speech | Restricted |
-| [EmoV-DB](https://github.com/numediart/EmoV-DB) | Emotional voice synthesis | Check recording rights |
-| [ESD](https://github.com/HLTSingapore/Emotional-Speech-Data) | English and Mandarin emotional TTS | Verify original terms |
-| [ESC-50](https://huggingface.co/datasets/ashraq/esc50) | Environmental sound recognition | Auxiliary audio understanding |
+| Dataset | Size | Capability | Access / caution |
+| ---- | ---- | ---- | ---- |
+| [Basis Global Emotions](https://huggingface.co/datasets/basis-ai/basis-global-emotions) | 525 h | Multilingual emotion and delivery, 108 locales | Review dataset agreement |
+| [Expresso](https://huggingface.co/collections/parler-tts/parler-tts-expresso) | ~47 h | Expressive speech styles | Research corpus; inspect rights |
+| [Parler-TTS MLS annotations](https://huggingface.co/datasets/parler-tts/mls_eng_10k) | ~10k h | Voice descriptions, acoustic tags | MLS-derived; check version |
+| [Emilia-NV / NVSpeech](https://huggingface.co/datasets/amphion/Emilia-NV) | — | Laughter, breathing, interjections | Mandarin nonverbal annotations |
+| [NonverbalTTS](https://huggingface.co/datasets/deepvk/NonverbalTTS) | ~17 h | Breathing, sighing, coughing, laughing | ~17 h, English |
+| [Vocal Bursts](https://huggingface.co/datasets/TTS-AGI/vocal-bursts) | — | Non-speech human vocal sounds | Verify per-source licenses |
+| [ExpressiveSpeech](https://huggingface.co/datasets/FreedomIntelligence/ExpressiveSpeech) | — | Emotional conversational speech | Mixed-source lineage |
+| [CREMA-D](https://huggingface.co/datasets/CREMA-D/CREMA-D) ⚠️ | 7,442 clips | Emotion recognition/conditioning | Check original terms |
+| [RAVDESS](https://zenodo.org/records/1188976) | 7,356 files | Acted emotional speech and song | Commercial license is separate |
+| [IEMOCAP](https://sail.usc.edu/iemocap/) 🔒 | ~12 h | Emotion, conversational prosody | Academic/request access |
+| [MSP-Podcast](https://ecs.utdallas.edu/research/researchlabs/msp-lab/MSP-Podcast.html) 🔒 | — | Natural speech emotions | Access approval |
+| [MSP-IMPROV](https://ecs.utdallas.edu/research/researchlabs/msp-lab/MSP-IMPROV.html) 🔒 | ~9.8 h | Improvised expressive speech | Restricted |
+| [EmoV-DB](https://github.com/numediart/EmoV-DB) | — | Emotional voice synthesis | Check recording rights |
+| [ESD](https://github.com/HLTSingapore/Emotional-Speech-Data) | ~29 h | English and Mandarin emotional TTS | Verify original terms |
+| [ESC-50](https://huggingface.co/datasets/ashraq/esc50) | 2,000 clips | Environmental sound recognition | Auxiliary audio understanding |
 
 #### Conversational speech and full-duplex
 
 Real-time voice agents need continuous streams, timestamps, multiple speakers, overlap, interruptions, backchannels and natural pauses. Turn-based ASR/TTS pairs cannot teach these.
 
-| Dataset | Scale | Value |
-| ------- | ----- | ----- |
+| Dataset | Size | Value |
+| ---- | ---- | ---- |
 | [Basis Conversations 1500](https://withbasis.co/open/conversations-1500) | 1,502 h, 22 languages | Up to four simultaneous speakers, channel-separated 48 kHz, ~100 h of detailed annotation; publisher states commercial training is permitted under its release terms |
 | [Open Yap 1K](https://huggingface.co/datasets/TheAgenticDataCompany/open-yap-1k) 🔒 | 1,000 h | Dual-channel full-duplex; public sample is 8.9 h, full corpus needs a data-use agreement; commercial training allowed, cloning dataset speakers prohibited |
 | [SmoothConv](https://github.com/qualialabsAI/SmoothConv-DuplexConv) | 100 h | Human-annotated conversational dynamics |
@@ -960,50 +1028,60 @@ Real-time voice agents need continuous streams, timestamps, multiple speakers, o
 | [Fisher English Part 1](https://catalog.ldc.upenn.edu/LDC2004S13) 🔒 | 984 h | Telephone conversation (LDC) |
 | [Fisher English Part 2](https://catalog.ldc.upenn.edu/LDC2005S13) 🔒 | 975 h | Telephone conversation (LDC) |
 | [Switchboard-1](https://catalog.ldc.upenn.edu/LDC97S62) 🔒 | ~260 h | Turns and disfluency (LDC) |
-| [CALLHOME corpora](https://catalog.ldc.upenn.edu/search) 🔒 | Multiple languages | Real telephone conversations (LDC) |
+| [CALLHOME corpora](https://catalog.ldc.upenn.edu/search) 🔒 | — | Real telephone conversations (LDC) |
 | [AMI Meeting Corpus](https://groups.inf.ed.ac.uk/ami/corpus/) | ~100 h | Meetings, overlapping speech |
 | [AliMeeting](https://www.openslr.org/119/) | ~119 h | Mandarin meetings, diarization |
 | [CHiME-6](https://chimechallenge.github.io/chime6/) | ~50 h | Multichannel dinner-party conversations |
 | [VoxConverse](https://www.mm.kaist.ac.kr/datasets/voxconverse/) | ~50–64 h | In-the-wild speaker turns |
-| [otoSpeech full-duplex](https://www.oto.earth/) 🔒 | Several subsets | Channel-separated conversation; access varies |
-| [Basis consented conversation collections](https://withbasis.co/) 🔒 | Multiple | Conversation, speaker and preference annotations |
+| [otoSpeech full-duplex](https://www.oto.earth/) 🔒 | — | Channel-separated conversation; access varies |
+| [Basis consented conversation collections](https://withbasis.co/) 🔒 | — | Conversation, speaker and preference annotations |
 
 Modern multichannel recordings keep far more acoustic information than Fisher/Switchboard for realistic synthesis and interaction modeling. For broader discovery see the [full-duplex speech dataset index](https://www.fullduplex.ai/datasets) (159 datasets at review time).
 
 #### Speech-language understanding
 
-| Dataset | Capability |
-| ------- | ---------- |
-| [MINDS-14](https://huggingface.co/datasets/PolyAI/minds14) | Spoken intent classification |
-| [Speech Commands](https://huggingface.co/datasets/google/speech_commands) | Keyword recognition |
-| [SUPERB](https://huggingface.co/datasets/superb) 🧪 | Speech representation evaluation |
-| [AudioBench](https://huggingface.co/datasets/AudioLLMs/AudioBench) 🧪⚠️ | Audio understanding benchmark suite |
-| [Granary v2 instruction targets](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | Contextual ASR, captioning, QA, translation |
+| Dataset | Size | Capability |
+| ---- | ---- | ---- |
+| [MINDS-14](https://huggingface.co/datasets/PolyAI/minds14) | — | Spoken intent classification |
+| [Speech Commands](https://huggingface.co/datasets/google/speech_commands) | 105,829 utterances | Keyword recognition |
+| [SUPERB](https://huggingface.co/datasets/superb) 🧪 | — | Speech representation evaluation |
+| [AudioBench](https://huggingface.co/datasets/AudioLLMs/AudioBench) 🧪⚠️ | 26 datasets | Audio understanding benchmark suite |
+| [Granary v2 instruction targets](https://huggingface.co/datasets/nvidia/Granary-v2) 🔗 | — | Contextual ASR, captioning, QA, translation |
 
 Grounded instruction data can be derived from audio with trusted transcripts (transcribe, summarize, extract action items, find a stated deadline, answer questions). Keep derived records linked to the original audio and transcript and carry the source license. Generated QA is not human-verified labeling; use the latter for evaluation.
 
 #### Singing and specialized vocal production
 
-| Dataset | Purpose |
-| ------- | ------- |
-| [GTSinger](https://huggingface.co/datasets/GTSinger/GTSinger) | Multilingual singing, technique, scores; separates pitch, phonemes, technique and speaker |
-| [OpenCPOP](https://wenet-e2e.github.io/opencpop/) | Mandarin singing with note/phoneme alignment |
-| [DiffSinger](https://github.com/MoonInTheRiver/DiffSinger) | Singing voice synthesis resources |
-| [VocalSet](https://zenodo.org/records/1193957) | Sung vocal techniques and phonation |
-| [CrawlSinger-OS](https://huggingface.co/datasets/pymaster/CrawlSinger-OS) | Processed singing/audio-score material |
+| Dataset | Size | Purpose |
+| ---- | ---- | ---- |
+| [GTSinger](https://huggingface.co/datasets/GTSinger/GTSinger) | ~80 h | Multilingual singing, technique, scores; separates pitch, phonemes, technique and speaker |
+| [OpenCPOP](https://wenet-e2e.github.io/opencpop/) | ~5.2 h | Mandarin singing with note/phoneme alignment |
+| [DiffSinger](https://github.com/MoonInTheRiver/DiffSinger) | — | Singing voice synthesis resources |
+| [VocalSet](https://zenodo.org/records/1193957) | ~10.1 h | Sung vocal techniques and phonation |
+| [CrawlSinger-OS](https://huggingface.co/datasets/pymaster/CrawlSinger-OS) | — | Processed singing/audio-score material |
+
+#### Stand-up comedy, timing and laughter
+
+Timing, pauses, prosody and audience response, which large TTS corpora lack. These projects mostly release annotations and metadata, not reusable audio or video; the underlying performances carry their own rights.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [StandUp4AI](https://github.com/Standup4AI/dataset) 🔗 | 334 h, 3,617 performances, 130K+ laughter labels | Multilingual stand-up with laughter timestamps and performance features; media not redistributed | Jokes, audience response, timing |
+| [TIC-TALK](https://huggingface.co/datasets/ENC-PSL/TIC-TALK) | 5,416 aligned records | Verbal material aligned with audio, laughter and body movement (2026 research release) | Timing, laughter and kinesics |
+| [Indonesian Stand-up Dataset](https://pmc.ncbi.nlm.nih.gov/articles/PMC12538016/) | — | Stand-up transcripts with laughter annotations | Non-English comedy timing |
 
 ### Evaluation
 
 Keep these out of training data.
 
-| Resource | Measures |
-| -------- | -------- |
-| [FLEURS](https://huggingface.co/datasets/google/fleurs) | Multilingual ASR and speech translation; includes Swedish |
-| [ESB benchmark](https://huggingface.co/datasets/esb/datasets) | English ASR across domains (earnings calls and others) |
-| [SUPERB](https://huggingface.co/datasets/superb) | Speech representation quality |
-| [AudioBench](https://huggingface.co/datasets/AudioLLMs/AudioBench) ⚠️ | Audio understanding and speech question answering |
-| [VoxConverse](https://mm.kaist.ac.kr/datasets/voxconverse/) | Diarization |
-| [CHiME-6](https://chimechallenge.github.io/chime6/) | Distant-microphone conversational recognition |
+| Resource | Size | Measures |
+| ---- | ---- | ---- |
+| [FLEURS](https://huggingface.co/datasets/google/fleurs) | ~1,200 h | Multilingual ASR and speech translation; includes Swedish |
+| [ESB benchmark](https://huggingface.co/datasets/esb/datasets) | — | English ASR across domains (earnings calls and others) |
+| [SUPERB](https://huggingface.co/datasets/superb) | — | Speech representation quality |
+| [AudioBench](https://huggingface.co/datasets/AudioLLMs/AudioBench) ⚠️ | 26 datasets | Audio understanding and speech question answering |
+| [VoxConverse](https://mm.kaist.ac.kr/datasets/voxconverse/) | ~64 h | Diarization |
+| [CHiME-6](https://chimechallenge.github.io/chime6/) | ~50 h | Distant-microphone conversational recognition |
 
 ### Training strategy and shortlist
 
@@ -1043,40 +1121,48 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 
 ### Pretraining
 
-| Dataset | Content | Notes |
-| ------- | ------- | ----- |
-| [LAION-5B](https://laion.ai/blog/laion-5b/) | ~5.85B CLIP-filtered image-text pairs (URLs and metadata) | 🔗⚠️ Metadata only; use the cleaned Re-LAION release where available |
-| [DataComp](https://www.datacomp.ai/) | Benchmark and pools up to 12.8B image-text pairs | 🔗 Designed for studying data filtering |
-| [COYO-700M](https://github.com/kakaobrain/coyo-dataset) | ~747M image-text pairs | 🔗⚠️ URLs and metadata |
-| [Conceptual 12M](https://github.com/google-research-datasets/conceptual-12m) | ~12M image-text pairs | 🔗 URLs and captions |
-| [ImageNet](https://www.image-net.org/) | 1.28M training images (1K classes); larger 21K release | ⚠️ Research and non-commercial terms |
-| [Open Images](https://storage.googleapis.com/openimages/web/index.html) | ~9M images with labels, boxes, relations | Annotations CC BY; images listed as CC BY |
+| Dataset | Size | Content | Notes |
+| ---- | ---- | ---- | ---- |
+| [LAION-5B](https://laion.ai/blog/laion-5b/) | ~5.85B pairs | CLIP-filtered image-text pairs (URLs and metadata) | 🔗⚠️ Metadata only; use the cleaned Re-LAION release where available |
+| [DataComp](https://www.datacomp.ai/) | up to 12.8B pairs | Benchmark and pools of image-text pairs | 🔗 Designed for studying data filtering |
+| [COYO-700M](https://github.com/kakaobrain/coyo-dataset) | ~747M pairs | Image-text pairs | 🔗⚠️ URLs and metadata |
+| [Conceptual 12M](https://github.com/google-research-datasets/conceptual-12m) | ~12M pairs | Image-text pairs | 🔗 URLs and captions |
+| [ImageNet](https://www.image-net.org/) | 1.28M train images (1K classes) | 1K-class training images; larger 21K release | ⚠️ Research and non-commercial terms |
+| [Open Images](https://storage.googleapis.com/openimages/web/index.html) | ~9M images | Images with labels, boxes, relations | Annotations CC BY; images listed as CC BY |
 
 ### Mid-training
 
-| Dataset | Content | Notes |
-| ------- | ------- | ----- |
-| [Recap-DataComp-1B](https://huggingface.co/datasets/UCSC-VLAA/Recap-DataComp-1B) | DataComp-1B images with model-generated recaptions | Caption-quality improvement |
-| [LAION-Aesthetics](https://laion.ai/blog/laion-aesthetics/) | Aesthetic-score-filtered LAION subsets | 🔗⚠️ Inherits LAION caveats |
-| [COCO](https://cocodataset.org/) | ~330K images with captions, boxes, segmentation | Annotations CC BY 4.0; images carry Flickr terms |
-| [Visual Genome](https://homes.cs.washington.edu/~ranjay/visualgenome/) | Dense region descriptions and relationships | Grounded, dense annotation |
-| [SA-1B](https://ai.meta.com/datasets/segment-anything/) | ~1.1B masks on ~11M images | Segmentation foundation models |
+| Dataset | Size | Content | Notes |
+| ---- | ---- | ---- | ---- |
+| [Recap-DataComp-1B](https://huggingface.co/datasets/UCSC-VLAA/Recap-DataComp-1B) | ~1B pairs | DataComp-1B images with model-generated recaptions | Caption-quality improvement |
+| [LAION-Aesthetics](https://laion.ai/blog/laion-aesthetics/) | — | Aesthetic-score-filtered LAION subsets | 🔗⚠️ Inherits LAION caveats |
+| [COCO](https://cocodataset.org/) | ~330K images | Images with captions, boxes, segmentation | Annotations CC BY 4.0; images carry Flickr terms |
+| [Visual Genome](https://homes.cs.washington.edu/~ranjay/visualgenome/) | ~108K images | Dense region descriptions and relationships | Grounded, dense annotation |
+| [SA-1B](https://ai.meta.com/datasets/segment-anything/) | ~11M images, 1.1B masks | Segmentation masks on images | Segmentation foundation models |
+| [HumorDB](https://github.com/kreimanlab/HumorDB) ⚠️ | 3,542 images | Controlled funny vs minimally different non-funny image pairs with ratings; verify source-image permissions | Visual humor, contrastive funniness |
+| [MemeLens](https://huggingface.co/datasets/QCRI/MemeLens) ⚠️ | 46 tasks | Multilingual meme sets | Meme explanation and contextual understanding |
+| [AHA-MEMES](https://huggingface.co/datasets/QCRI/AHA-MEMES) ⚠️ | 5,000 memes | Arabic memes | Humor, cultural references, interpretation |
+| [Meme Text Corpus](https://huggingface.co/datasets/Alogotron/meme-text-corpus) ⚠️ | — | Aggregated meme OCR and labels | Meme text pretraining |
+| [HUMOR-Datasets](https://huggingface.co/datasets/AnonySubmission/HUMOR-Datasets) ⚠️ | — | Memes and less-humorous rewrites | Contrastive humor learning |
 
 ### Post-training
 
-| Dataset | Content | Use |
-| ------- | ------- | --- |
-| [LLaVA-Instruct-150K](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K) ⚠️ | Visual instruction-following (model-generated) | Vision-language SFT |
-| [InstructPix2Pix dataset](https://github.com/timothybrooks/instruct-pix2pix) | Instruction-based image-edit triplets | Instruction editing |
-| [Pick-a-Pic v2](https://huggingface.co/datasets/yuvalkirstain/pickapic_v2) ⚠️ | Human preferences over generated images | Preference tuning, reward models |
-| [ImageReward](https://github.com/THUDM/ImageReward) | Human rankings for text-to-image output | Reward modeling |
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [LLaVA-Instruct-150K](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K) ⚠️ | ~150K | Visual instruction-following (model-generated) | Vision-language SFT |
+| [InstructPix2Pix dataset](https://github.com/timothybrooks/instruct-pix2pix) | ~450K triplets | Instruction-based image-edit triplets | Instruction editing |
+| [Pick-a-Pic v2](https://huggingface.co/datasets/yuvalkirstain/pickapic_v2) ⚠️ | ~959K pairs | Human preferences over generated images | Preference tuning, reward models |
+| [ImageReward](https://github.com/THUDM/ImageReward) | ~137K pairs | Human rankings for text-to-image output | Reward modeling |
+| [New Yorker Caption Contest Benchmarks](https://huggingface.co/datasets/jmhessel/newyorker_caption_contest) ⚠️ | — | Cartoon-caption challenge tasks | Matching, explanation, ranking |
+| [Cartoon Caption Generation](https://github.com/yguooo/cartoon-caption-generation) | — | Training and evaluation methodology; builds on [New Yorker Caption Ranking](https://huggingface.co/datasets/yguooo/newyorker_caption_ranking) | Preference-based cartoon caption models |
 
 ### Evaluation
 
-| Resource | Measures |
-| -------- | -------- |
-| [GenEval](https://github.com/djghosh13/geneval) 🧪 | Compositional text-to-image alignment |
-| [MMMU](https://mmmu-benchmark.github.io/) 🧪 | Multimodal expert-level understanding |
+| Resource | Size | Measures |
+| ---- | ---- | ---- |
+| [GenEval](https://github.com/djghosh13/geneval) 🧪 | 553 prompts | Compositional text-to-image alignment |
+| [MMMU](https://mmmu-benchmark.github.io/) 🧪 | 11.5K questions | Multimodal expert-level understanding |
+| [Humor-Bench](https://github.com/ReubenNarad/Humor-Bench) 🧪 | — | Expert-annotated cartoon explanations for visual-humor reasoning |
 
 ## Practice
 
@@ -1084,23 +1170,23 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 
 A starting catalog, not a recommendation to train on all fifteen at once. Begin with the smallest suitable subsets and add data only when evaluation shows a benefit.
 
-| # | Dataset | Role |
-| - | ------- | ---- |
-| 1 | FineWeb-Edu | Foundation pretraining baseline |
-| 2 | DCLM Baseline | Independent data-quality comparison |
-| 3 | The Stack v2 | Code foundation and continued pretraining |
-| 4 | FineMath | Math-focused continued pretraining |
-| 5 | Tülu 3 SFT Mixture | General SFT and distillation |
-| 6 | OpenCodeInstruct | Coding instruction tuning |
-| 7 | OpenMathInstruct-2 | Reasoning SFT |
-| 8 | UltraFeedback | Preference learning, reward modeling |
-| 9 | HelpSteer2 | Human-annotated reward modeling |
-| 10 | Tülu 3 RLVR | Verifiable RL baseline |
-| 11 | SWE-Gym | Executable software engineering training |
-| 12 | SWE-smith | Continual generation of repository tasks |
-| 13 | AgentGym | General interactive agent learning |
-| 14 | TiC-LM | Time-continual learning and retention |
-| 15 | RewardBench | Held-out reward-model validation |
+| # | Dataset | Size | Role |
+| ---- | ---- | ---- | ---- |
+| 1 | FineWeb-Edu | ~1.3T tokens | Foundation pretraining baseline |
+| 2 | DCLM Baseline | ~4T tokens | Independent data-quality comparison |
+| 3 | The Stack v2 | ~3B files, 600+ languages | Code foundation and continued pretraining |
+| 4 | FineMath | ~54B tokens | Math-focused continued pretraining |
+| 5 | Tülu 3 SFT Mixture | ~939K examples | General SFT and distillation |
+| 6 | OpenCodeInstruct | ~5M | Coding instruction tuning |
+| 7 | OpenMathInstruct-2 | ~14M | Reasoning SFT |
+| 8 | UltraFeedback | ~64K prompts, ~256K responses | Preference learning, reward modeling |
+| 9 | HelpSteer2 | ~21K responses (~10K prompts) | Human-annotated reward modeling |
+| 10 | Tülu 3 RLVR | ~30K prompts | Verifiable RL baseline |
+| 11 | SWE-Gym | 2,438 instances | Executable software engineering training |
+| 12 | SWE-smith | ~50K task instances | Continual generation of repository tasks |
+| 13 | AgentGym | — | General interactive agent learning |
+| 14 | TiC-LM | — | Time-continual learning and retention |
+| 15 | RewardBench | ~3K prompts | Held-out reward-model validation |
 
 **Suggested order of work**
 
