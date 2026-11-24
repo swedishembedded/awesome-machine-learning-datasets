@@ -67,7 +67,12 @@ A competitive model needs more than one big download. Each stage of development 
 - [Images](#images)
   - [Pretraining](#pretraining-3)
   - [Mid-training](#mid-training-3)
+    - [Detection, segmentation and grounding](#detection-segmentation-and-grounding)
+    - [OCR, documents, charts and diagrams](#ocr-documents-charts-and-diagrams)
   - [Post-training](#post-training-3)
+    - [Vision-language instruction mixtures](#vision-language-instruction-mixtures)
+    - [Image editing and controllable generation](#image-editing-and-controllable-generation)
+    - [Image preference and reward data](#image-preference-and-reward-data)
   - [Evaluation](#evaluation-3)
 - [Practice](#practice)
   - [Recommended starter set for language models](#recommended-starter-set-for-language-models)
@@ -1129,6 +1134,19 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 | [Conceptual 12M](https://github.com/google-research-datasets/conceptual-12m) | ~12M pairs | Image-text pairs | 🔗 URLs and captions |
 | [ImageNet](https://www.image-net.org/) | 1.28M train images (1K classes) | 1K-class training images; larger 21K release | ⚠️ Research and non-commercial terms |
 | [Open Images](https://storage.googleapis.com/openimages/web/index.html) | ~9M images | Images with labels, boxes, relations | Annotations CC BY; images listed as CC BY |
+| [Re-LAION-5B](https://laion.ai/blog/relaion-5b/) 🔗 | 5.5B links | Cleaned image-text links (metadata and URLs) | Web-scale image-language pretraining |
+| [DataComp-1B](https://huggingface.co/datasets/mlfoundations/datacomp_1b) 🔗 | ~1.38B candidates | Image-text candidate pool | Filtering research |
+| [DataComp-HQ](https://huggingface.co/datasets/laion/datacomp-hq) 🔗 | — | Curated image-text metadata | Quality-aware corpus selection |
+| [Re-LAION Caption 19M](https://huggingface.co/datasets/supermodelresearch/Re-LAION-Caption19M) 🔗 | ~19M | Recaptioned image metadata | Image-generation data |
+| [Conceptual Captions 3M](https://github.com/google-research-datasets/conceptual-captions) 🔗 | ~3.3M pairs | Image-caption pairs (URLs and captions) | Caption alignment |
+| [WIT (Wikipedia-based Image Text)](https://github.com/google-research-datasets/wit) 🔗 | 37M+ examples | Multilingual images with contextual text | Multilingual image-text |
+| [RedCaps](https://github.com/redcaps-dataset/redcaps) ⚠️ | ~12M pairs | Reddit image-caption pairs | Image-caption distribution |
+| [JourneyDB](https://huggingface.co/datasets/JourneyDB/JourneyDB) ⚠️ | 4.43M images | Generated images with prompts, captions and VQA | Prompt following, stylized imagery |
+| [DiffusionDB](https://huggingface.co/datasets/jobs-git/diffusiondb) | 14M images | Generated images with prompts | Prompt-image supervision |
+| [FFHQ](https://github.com/NVlabs/ffhq-dataset) ⚠️ | 70K images | High-quality faces | Face reconstruction (VAE/tokenizer) |
+| [CelebA / CelebA-HQ](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) ⚠️ | 200K+ photos; 30K HQ | Face photos | Portrait reconstruction |
+| [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) | 1K images | High-resolution images | Fine detail, super-resolution |
+| [Flickr30K](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset) ⚠️ | ~31K images | Image-caption pairs | Small caption training/validation |
 
 ### Mid-training
 
@@ -1145,6 +1163,34 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 | [Meme Text Corpus](https://huggingface.co/datasets/Alogotron/meme-text-corpus) ⚠️ | — | Aggregated meme OCR and labels | Meme text pretraining |
 | [HUMOR-Datasets](https://huggingface.co/datasets/AnonySubmission/HUMOR-Datasets) ⚠️ | — | Memes and less-humorous rewrites | Contrastive humor learning |
 
+#### Detection, segmentation and grounding
+
+Structured spatial supervision.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Objects365](https://www.objects365.org/) | 365 categories | Large-vocabulary object detection | Detection |
+| [LVIS](https://www.lvisdataset.org/) | 1,203 categories | Long-tail instance segmentation | Segmentation |
+| [RefCOCO family](https://refcoco.github.io/) | — | Language-conditioned object grounding | Referring expressions |
+| [Localized Narratives](https://github.com/google-research-datasets/LocalizedNarratives) | ~849K narratives | Grounded natural-language descriptions | Grounded captioning |
+
+#### OCR, documents, charts and diagrams
+
+General natural-image data does not supply dense text supervision; these matter for PDFs, screenshots, technical drawings and documentation.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [TextOCR](https://rrc.cvc.uab.es/?ch=13) | ~28K images | Text detection and recognition | OCR |
+| [DocVQA](https://www.docvqa.org/) | 12K images, 50K questions | Question answering about documents | Document VQA |
+| [Docmatix](https://huggingface.co/datasets/HuggingFaceM4/Docmatix) | ~2.5M | Generated document questions | Document instruction tuning |
+| [DoclingMatix](https://huggingface.co/datasets/HuggingFaceM4/DoclingMatix) | ~1.27M | Document understanding | Document instruction tuning |
+| [AI2D](https://github.com/allenai/ai2d) | ~5K diagrams | Diagram interpretation | Diagram QA |
+| [ChartQA](https://huggingface.co/datasets/ChartQA/ChartQA) | ~32.7K questions | Chart understanding | Chart QA |
+| [InfographicVQA](https://github.com/google-research-datasets/infographic-vqa) | 5.5K images, 30K questions | Infographics and complex layouts | Infographic QA |
+| [CORD](https://github.com/clovaai/cord) | 1,000 receipts | Receipt and document parsing | Document parsing |
+| [PixMo-Docs](https://huggingface.co/datasets/allenai/pixmo-docs) | — | Document-heavy visual understanding | Document VQA |
+| [DataComp-VLM](https://arxiv.org/abs/2606.28551) ⚠️ | 160 datasets, ~6T tokens | Image-caption, interleaved, text-only and instruction mixtures with a controlled 8B-model benchmark; unverified paper link | Foundation mixture design |
+
 ### Post-training
 
 | Dataset | Size | Content | Use |
@@ -1156,6 +1202,45 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 | [New Yorker Caption Contest Benchmarks](https://huggingface.co/datasets/jmhessel/newyorker_caption_contest) ⚠️ | — | Cartoon-caption challenge tasks | Matching, explanation, ranking |
 | [Cartoon Caption Generation](https://github.com/yguooo/cartoon-caption-generation) | — | Training and evaluation methodology; builds on [New Yorker Caption Ranking](https://huggingface.co/datasets/yguooo/newyorker_caption_ranking) | Preference-based cartoon caption models |
 
+#### Vision-language instruction mixtures
+
+Alignment comes from captions; precise questions, OCR, localization and spatial reasoning need structured instruction data.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [FineVision](https://huggingface.co/datasets/HuggingFaceM4/FineVision) | 24M+ examples | Large curated multimodal instruction mixture | Vision-language instruction tuning |
+| [LLaVA-OneVision-1.5](https://huggingface.co/datasets/mvp-lab/LLaVA-OneVision-1.5-Instruct-Data) | 22M examples | Large instruction corpus | Large VLM post-training |
+| [The Cauldron](https://huggingface.co/datasets/HuggingFaceM4/the_cauldron) | ~1.9M | Multimodal instruction datasets | Multimodal instructions |
+| [PixMo-Cap](https://huggingface.co/datasets/allenai/pixmo-cap) | — | Human image descriptions | Detailed visual captioning |
+| [LLaVA-Instruct-665K](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-665K) ⚠️ | ~665K | General VQA and instruction data | VLM instruction tuning |
+| [PerceptionLM Data](https://ai.meta.com/datasets/plm-data/) | Multiple datasets | Detailed image and video comprehension | VLM instruction tuning |
+
+#### Image editing and controllable generation
+
+Keep separate projections for instruction edits, inpainting, control signals (depth, pose, edges), multi-reference composition and preservation-aware editing; do not collapse them into caption data. Generated edit targets and derivatives often carry upstream non-commercial terms.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [Pico-Banana-400K](https://github.com/apple/pico-banana-400k) ⚠️ | 400K edits | Open Images-derived edit pairs with quality scoring; non-commercial terms | Instruction-guided editing |
+| [GPT-Image-Edit-1.5M](https://huggingface.co/datasets/UCSC-VLAA/GPT-Image-Edit-1.5M) ⚠️ | ~1.5M edits | Instruction-edit supervision; upstream components include CC BY-NC and BY-NC-SA | Broad editing |
+| [HQ-Edit](https://huggingface.co/datasets/UCSC-VLAA/HQ-Edit) | 197,350 edits | High-quality local and global edits | Instruction editing |
+| [UltraEdit](https://huggingface.co/datasets/BleachNick/UltraEdit) | Million-scale | Editing triplets | Instruction editing |
+| [RCEdit-500K](https://huggingface.co/datasets/carpedkm/RCEdit-500K) | ~472K rows | Image-conditioned editing | Instruction editing |
+| [VIVID-10M](https://huggingface.co/datasets/KlingTeam/VIVID-10M) | ~10M-class | Localized and interactive editing; check modality subsets | Image/video editing |
+| [ConceptEdit-12M](https://huggingface.co/datasets/inclusionAI/ConceptEdit-12M) | Million-scale | Concept-based changes | Instruction editing |
+| [CrispEdit-2M](https://huggingface.co/datasets/WeiChow/CrispEdit-2M) | ~2M | Instruction edits | Instruction editing |
+| [MagicBrush](https://github.com/OSU-NLP-Group/MagicBrush) | ~10K edits | Human-annotated instruction editing | Editing fine-tuning |
+
+#### Image preference and reward data
+
+Human preference teaches what people prefer, not necessarily anatomy, text legibility or geometry; learn separate scores for quality, adherence, preservation, artifacts and safety.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [HPS v2](https://github.com/tgxs002/HPSv2) | ~800K choices | Human preference choices | Preference prediction |
+| [Text-to-Image Preferences 2M](https://huggingface.co/datasets/datapointai/text-2-image-human-preferences-2m) | ~2M judgments | Pairwise human judgments | Large-scale alignment |
+| [Rapidata text-to-image feedback benchmark](https://huggingface.co/datasets/Rapidata/text-to-image-human-feedback-benchmark) | — | Human comparisons | Preference assessment |
+
 ### Evaluation
 
 | Resource | Size | Measures |
@@ -1163,6 +1248,8 @@ Discovery beyond this list: [Audio/Speech Datasets catalog](https://github.com/w
 | [GenEval](https://github.com/djghosh13/geneval) 🧪 | 553 prompts | Compositional text-to-image alignment |
 | [MMMU](https://mmmu-benchmark.github.io/) 🧪 | 11.5K questions | Multimodal expert-level understanding |
 | [Humor-Bench](https://github.com/ReubenNarad/Humor-Bench) 🧪 | — | Expert-annotated cartoon explanations for visual-humor reasoning |
+| [T2I-CompBench](https://github.com/Karine-Huang/T2I-CompBench) 🧪 | — | Attribute binding and compositions |
+| [ImagenHub](https://github.com/TIGER-AI-Lab/ImagenHub) 🧪 | — | Multi-task image generation and editing evaluation |
 
 ## Practice
 
