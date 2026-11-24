@@ -43,7 +43,13 @@ A competitive model needs more than one big download. Each stage of development 
 - [Video](#video)
   - [Pretraining](#pretraining-1)
   - [Mid-training](#mid-training-1)
+    - [Action recognition and temporal understanding](#action-recognition-and-temporal-understanding)
+    - [Segmentation, tracking, depth, flow and 3D](#segmentation-tracking-depth-flow-and-3d)
   - [Post-training](#post-training-1)
+    - [Video instruction and understanding](#video-instruction-and-understanding)
+    - [Video editing and human-centric generation](#video-editing-and-human-centric-generation)
+    - [World models and action-conditioned video](#world-models-and-action-conditioned-video)
+    - [Video preference and reward data](#video-preference-and-reward-data)
   - [Evaluation](#evaluation-1)
 - [Audio and Speech](#audio-and-speech)
   - [Pretraining](#pretraining-2)
@@ -773,6 +779,12 @@ Some sets appear in both training and evaluation literature. Training on MATH tr
 | [Kinetics-700](https://github.com/cvdfoundation/kinetics-dataset) | ~650K clips | Action-labeled clips, 700 classes | Action recognition pretraining |
 | [Something-Something v2](https://www.qualcomm.com/developer/software/something-something-v-2-dataset) | ~220K clips | Object-interaction clips | Temporal reasoning; license terms apply ⚠️ |
 | [Ego4D](https://ego4d-data.org/) 🔒 | 3,670 h | Egocentric video with audio | Gated access |
+| [LAION-BVD](https://laion.ai/blog/bvd/) 🔗⚠️ | 1.3B URLs; ~13.5M h collected | Video URL discovery corpus (~80M source videos, 55M processed clips); [paper](https://arxiv.org/abs/2608.24845) unverified | Video foundation pretraining; media access is restricted and complex |
+| [VideoUFO](https://huggingface.co/datasets/VideoUFO/VideoUFO) | 1.09M clips | Short and detailed captions across 1,291 user-oriented topics ([paper](https://arxiv.org/abs/2503.01739)) | Text-to-video |
+| [FineVideo](https://huggingface.co/datasets/HuggingFaceFV/finevideo) | 43,751 videos (3,425 h) | Scene descriptions, speech transcripts, scene divisions and questions | Video-text, video QA |
+| [ViMix-14M](https://arxiv.org/abs/2511.18382) ⚠️ | ~13.7M pairs (~22.8K h) | Long-form captions across mixed sources | Video-text training |
+| [Vript](https://github.com/Vchitect/Vript) | 12K videos, 420K+ clips | Dense narrative video captions | Video captioning |
+| [SpatialVID](https://huggingface.co/datasets/SpatialVID/SpatialVID) ⚠️ | 2.7M clips (7,089 h) | Real video with estimated depth, camera pose and motion annotations; non-commercial conditions on key components | Controllable and geometry-aware video |
 
 ### Mid-training
 
@@ -781,6 +793,37 @@ Some sets appear in both training and evaluation literature. Training on MATH tr
 | [OpenVid-1M](https://huggingface.co/datasets/nkp37/OpenVid-1M) | ~1M | High-quality text-video pairs | Quality-filtered for text-to-video |
 | [Koala-36M](https://koala36m.github.io/) | ~36M clips | Clips with fine-grained captions and quality scoring | Curation reference ⚠️ |
 | [MiraData](https://github.com/mira-space/MiraData) | 788K clips | Long clips with structured captions | Motion strength and long-take focus ⚠️ |
+
+#### Action recognition and temporal understanding
+
+Backbone data for video-language and temporal reasoning. Keep protected test splits of benchmarks out of training.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [UCF101](https://www.crcv.ucf.edu/data/UCF101.php) | 13,320 clips | Action classification | Baseline |
+| [HMDB51](https://serre-lab.clps.brown.edu/resource/hmdb-a-large-human-motion-database/) | 6,766 clips | Human motion recognition | Baseline |
+| [Ego-Exo4D](https://ego-exo4d-data.org/) 🔒 | — | Synchronized first- and third-person actions | Cross-view correspondence |
+| [EPIC-KITCHENS](https://epic-kitchens.github.io/) | ~100 h (EPIC-KITCHENS-100) | Object manipulation and actions | Egocentric action understanding |
+
+#### Segmentation, tracking, depth, flow and 3D
+
+Geometry supervision for generation that should understand space rather than copy appearance. Combine exact synthetic ground truth (Kubric), measured RGB-D and large estimated annotations.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [SA-V](https://ai.meta.com/datasets/segment-anything-video/) | 51K videos, 643K masklets | Video segmentation with persistent object masks | Segmentation and tracking |
+| [TAP-Vid](https://github.com/google-research/tapnet) | — | Point tracking through video | Tracking |
+| [Kubric](https://github.com/google-research/kubric) | Generated | Rendered ground-truth flow, depth and segmentation | Synthetic geometry |
+| [NYU Depth V2](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html) | 1,449 labeled RGB-D | Indoor RGB-D | Depth |
+| [KITTI](https://www.cvlibs.net/datasets/kitti/) | — | Driving geometry and motion | Depth, flow, driving |
+| [ScanNet](https://www.scan-net.org/) | 1,513 scans | Indoor 3D scenes, RGB-D, camera paths | 3D reconstruction |
+| [DL3DV-10K](https://dl3dv-10k.github.io/) | 10,510 scenes | Multiview 3D visual geometry | 3D and novel views |
+| [Google Scanned Objects](https://google.github.io/scanned-objects/) | — | Object geometry and multiview images | Object geometry |
+| [FlyingChairs](https://lmb.informatik.uni-freiburg.de/resources/datasets/FlyingChairs.en.html) | 22,872 pairs | Synthetic optical flow | Flow |
+| [MPI Sintel](https://lmb.informatik.uni-freiburg.de/resources/datasets/Sintel.en.html) | — | Synthetic video optical flow | Flow |
+| [Human3.6M](http://vision.imar.ro/human3.6m/) ⚠️ | 3.6M poses | 3D human pose; site availability unverified | 3D pose |
+| [AMASS](https://amass.is.tue.mpg.de/) | 40+ h | Human motion sequences | Human motion |
+| [SMPL](https://smpl.is.tue.mpg.de/) | — | Parametric human body model | Body geometry |
 
 ### Post-training
 
@@ -795,12 +838,60 @@ Some sets appear in both training and evaluation literature. Training on MATH tr
 | [MUStARD](https://lit.eecs.umich.edu/downloads.html) ⚠️ | — | Sitcom video, audio, text with context ([resources](https://github.com/soujanyaporia/MUStARD)) | Audiovisual sarcasm |
 | [MultiHuSE](https://arxiv.org/abs/2609.11322) ⚠️ | — | Multimodal humor styles and emotions; unverified paper link | Acting, delivery and affect |
 
+#### Video instruction and understanding
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [VideoChat2 training data](https://github.com/ShowLab/VideoChat2) | — | Video instruction tuning data | Video-language SFT |
+| [Video-ChatGPT instructions](https://github.com/Video-ChatGPT/Video-ChatGPT) | — | Video QA and descriptions | Video-language SFT |
+| [ShareGPT4Video](https://github.com/ShareGPT4Omni/ShareGPT4Video) | — | Video captions and instruction generation | Video captioning SFT |
+| [Cambrian-S-3M](https://github.com/cambrian-mllm/cambrian-s) | 3M | Video instruction data | Video-language SFT |
+
+#### Video editing and human-centric generation
+
+Keep temporal correspondence (original and edited video, masks, tracked IDs, camera trajectory, timestamps, preservation constraints); framewise image edits lose identity, background continuity and motion.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [OpenVE-3M](https://huggingface.co/datasets/Lewandofski/OpenVE-3M) | 3M | Instruction-guided video editing across eight categories (style, background, local, add/remove, subtitles, multishot camera, creative) | Video editing |
+| [OpenHumanVid](https://openaccess.thecvf.com/content/CVPR2025/papers/Li_OpenHumanVid_A_Large-Scale_High-Quality_Dataset_for_Enhancing_Human-Centric_Video_Generation_CVPR_2025_paper.pdf) ⚠️ | 52.3M samples | Human-centric video with pose and speech annotations; check source availability and redistribution | Pose/speech-conditioned human video |
+
+#### World models and action-conditioned video
+
+Action-conditioned models need states, actions and transitions, not only captions. Embodiments, coordinate frames and action definitions differ, so record the action-space semantics. See also the embodied datasets under [Agentic training](#agentic-training).
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [BridgeData V2](https://rail-berkeley.github.io/bridgedata/) | ~60K trajectories | Manipulation states and actions | Imitation, world models |
+| [robosuite](https://github.com/ARISE-Initiative/robosuite) | Synthetic | Reproducible robot simulation | Control and manipulation |
+| [CALVIN](https://github.com/mees/calvin) | — | Language-conditioned manipulation | Long-horizon robotic behavior |
+| [EgoDex](https://github.com/apple/ml-egodex) | ~829 h | Hand motion and dexterity | Dexterous manipulation priors |
+| [Waymo Open Dataset](https://github.com/waymo-research/waymo-open-dataset) ⚠️ | — | Autonomous-driving multi-camera sequences | Temporal perception |
+| [nuScenes](https://www.nuscenes.org/) ⚠️ | — | Driving sequences with RGB and LiDAR | Scene geometry and motion |
+
+#### Video preference and reward data
+
+Separate motion plausibility from frame quality; individually attractive frames can still show impossible trajectories or identity changes.
+
+| Dataset | Size | Content | Use |
+| ---- | ---- | ---- | ---- |
+| [VideoScore](https://github.com/TIGER-AI-Lab/VideoScore) | — | Video quality reward modeling (with VideoFeedback) | Reward models |
+| [MJ-VIDEO](https://github.com/aiming-lab/MJ-Video) | — | Fine-grained video preferences | Preference tuning |
+
 ### Evaluation
 
 | Resource | Size | Measures |
 | ---- | ---- | ---- |
 | [VBench](https://github.com/Vchitect/VBench) 🧪 | 16 dimensions | Video generation quality across dimensions |
 | [Video-MME](https://video-mme.github.io/) 🧪 | 900 videos, 2,700 QA | Video understanding by multimodal models |
+| [VideoPhy](https://github.com/ShowLab/VideoPhy) 🧪 | — | Physical commonsense in video generation |
+| [Video-Bench](https://github.com/Video-Bench/Video-Bench) 🧪 | — | Video QA and quality comparison |
+| [VideoGen-Eval](https://github.com/VideoGen-Eval/VideoGen-Eval) 🧪 | — | Generation quality and adherence |
+| [LongVideoBench](https://github.com/longvideobench/LongVideoBench) 🧪 | 6,678 questions | Long-form video grounding |
+| [Video-MMMU](https://github.com/JUNJIE99/Video-MMMU) 🧪 | 300 videos, 900 questions | Expert video reasoning |
+| [EgoSchema](https://github.com/egoschema/EgoSchema) 🧪 | 5K+ questions | Egocentric temporal reasoning |
+| [TVQA](https://github.com/jayleicn/TVQA) 🧪 | ~152K QA | Video QA with subtitles |
+| [MSR-VTT](https://github.com/MILVLG/msrvtt) 🧪 | 10K clips | Caption retrieval and video QA |
 
 ## Audio and Speech
 
