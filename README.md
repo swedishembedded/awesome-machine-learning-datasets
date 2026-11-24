@@ -182,6 +182,14 @@ Corpora used to teach language, world knowledge, programming syntax and mathemat
 | [Nemotron CC Code v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1) | — | Code-oriented web corpus | Supplementary programming knowledge |
 | [GitHub Code](https://huggingface.co/datasets/codeparrot/github-code) | 115M files (~1 TB) | Source code across programming languages | Code pretraining |
 | [CodeParrot Clean](https://huggingface.co/datasets/codeparrot/codeparrot-clean) | ~50 GB | Python code | Python code pretraining |
+| [CommitPack](https://huggingface.co/datasets/bigcode/commitpack) | ~4 TB, 350 languages | Repository commit history and modifications | Change-aware code pretraining |
+| [CommitPackFT](https://huggingface.co/datasets/bigcode/commitpackft) | ~702K examples | Commit-based instruction-tuning material | Commit instruction tuning |
+| [Stack v3 Train](https://huggingface.co/datasets/HuggingFaceCode/stack-v3-train) ⚠️ | — | More recent large-scale code corpus; audit first | Code pretraining |
+| [Nemotron Pretraining Code v3](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v3) | — | NVIDIA code pretraining corpus | Code foundation training |
+| [KStack](https://huggingface.co/datasets/JetBrains/KStack) | — | Curated Kotlin code from JetBrains | Code pretraining |
+| [CodeSearchNet](https://huggingface.co/datasets/code-search-net/code_search_net) | ~2M function-doc pairs | Code paired with natural-language documentation | Code-to-text association |
+| [CodeXGLUE Completion](https://huggingface.co/datasets/google/code_x_glue_cc_code_completion_token) | — | Token and line completion tasks | Completion (supplemental) |
+| [CodeXGLUE Code-to-Text](https://huggingface.co/datasets/google/code_x_glue_ct_code_to_text) | — | Code summarization data | Summarization (supplemental) |
 
 Preserve file extensions, language labels, repository provenance and file boundaries; they are needed later for completion, repository understanding and task generation.
 
@@ -311,6 +319,17 @@ Distinguish **final-answer correctness** from **reasoning-trace quality**. A rig
 | [Nemotron SFT OpenCode v1](https://huggingface.co/datasets/nvidia/Nemotron-SFT-OpenCode-v1) | — | Code-centered instruction data | Coding post-training |
 | [Nemotron SFT SWE v3](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3) | — | Software engineering trajectories | Repository-level agent SFT |
 | [Open SWE Traces](https://huggingface.co/datasets/nvidia/Open-SWE-Traces) | 200K+ trajectories | Software engineering agent traces | Tool-trajectory imitation |
+| [Nemotron Competitive Programming v2](https://huggingface.co/datasets/nvidia/Nemotron-SFT-Competitive-Programming-v2) | — | Solutions, code completion and critique | Competitive-programming SFT, critique supervision |
+| [CodeFeedback Filtered Instruction](https://huggingface.co/datasets/m-a-p/CodeFeedback-Filtered-Instruction) | ~157K | Filtered coding instructions | Coding SFT, quality filtering |
+| [Magicoder Evol-Instruct](https://huggingface.co/datasets/ise-uiuc/Magicoder-Evol-Instruct-110K) | ~110K | Evolved coding instructions | Code SFT |
+| [OpenCodeReasoning](https://huggingface.co/datasets/nvidia/OpenCodeReasoning) | ~735K | Coding problem solving with reasoning traces | Reasoning demonstrations |
+| [OpenCodeReasoning II](https://huggingface.co/datasets/nvidia/OpenCodeReasoning-II) | — | Subsequent code-reasoning dataset | Reasoning demonstrations |
+| [Nemotron SWE v2](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v2) | — | Multi-candidate software engineering solutions | SWE SFT |
+| [Nemotron SWE v3.5](https://huggingface.co/datasets/nvidia/Nemotron-SFT-SWE-v3.5) | — | Newer SWE instruction and agent data | SWE SFT |
+| [Nemotron Cascade 2 SFT](https://huggingface.co/datasets/nvidia/Nemotron-Cascade-2-SFT-Data) | — | Large blended SFT corpus including code and agents | Supplemental SFT |
+| [CodeXGLUE Refinement](https://huggingface.co/datasets/google/code_x_glue_cc_code_refinement) | — | Correcting broken code | Bug fixing |
+| [CodeXGLUE Defect Detection](https://huggingface.co/datasets/google/code_x_glue_cc_defect_detection) | — | Defect identification | Defect detection |
+| [CodeXGLUE Translation](https://huggingface.co/datasets/google/code_x_glue_cc_code_to_code_trans) | — | Translating implementations between languages | Code translation |
 
 Treat code data at three levels: single-function generation from a spec; file-level edits that preserve surrounding code; and repository-level tasks that inspect a project, use tools, change several files and validate behavior. The third is closest to what a software-engineering agent needs.
 
@@ -384,6 +403,15 @@ Teaches schema interpretation, argument generation, call/no-call decisions, para
 | [APIGen-MT](https://apigen-mt.github.io/) | — | Multi-turn tool use |
 | [APIBench](https://huggingface.co/datasets/gorilla-llm/APIBench) | 16,450 instruction–API pairs | API documentation understanding |
 | [TaskBench](https://github.com/microsoft/TaskBench) | — | Planner training |
+| [APIGen-MT-5K](https://huggingface.co/datasets/Salesforce/APIGen-MT-5k) | ~5K | Multi-turn API interaction — Multi-turn tool use |
+| [Agent-FLAN](https://huggingface.co/datasets/internlm/Agent-FLAN) | — | Agent trajectories and capability-focused instruction data — Agent SFT |
+| [Nemotron RL Function Calling](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Function-Calling-Pivot-v1) | — | Verifiable function-calling training tasks — Function-calling RL |
+| [CodeAct / CodeActInstruct](https://huggingface.co/datasets/xingyaoww/code-act) | — | Code execution as an agent action — Executable-action agents |
+| [τ2-bench trajectories](https://huggingface.co/datasets/AgentSuite/tau2-bench-trajectories) | — | Stateful multi-turn tool workflows — Tool-use SFT |
+| [Nemotron Terminal RL](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Terminal-Pivot-v1) | — | Terminal-oriented agent tasks — Terminal RL |
+| [Terminal-Bench trajectories](https://huggingface.co/datasets/yoonholee/terminalbench-trajectories) ⚠️ | — | Terminal tasks with recorded action sequences — Terminal agent SFT; audit evaluation overlap |
+| [Terminal-Lego 15K](https://huggingface.co/datasets/PrimeIntellect/Terminal-Lego-15k) | ~15K trajectories | Terminal agent trajectories — Terminal agent SFT |
+| [Agent-SFT](https://huggingface.co/datasets/voidful/agent-sft) | — | Aggregated and normalized agent data — Agent SFT |
 
 #### Preference and reward learning
 
@@ -480,6 +508,15 @@ Exact string match is rarely a sufficient math verifier: handle numeric normaliz
 | [Longtail-SWE](https://huggingface.co/datasets/nebius/Longtail-SWE) | — | Difficult software tasks | Hard-task generation and evaluation |
 | [Harbor](https://github.com/laude-institute/harbor) | — | Environment execution and grading infrastructure | Generates trajectories; not itself a dataset |
 | [CodeBenchGen](https://github.com/THUDM/CodeBenchGen) | — | Generated executable coding tasks | Scalable program verification |
+| [Verifiable Coding Problems](https://huggingface.co/datasets/PrimeIntellect/verifiable-coding-problems) | — | RL-oriented verifiable coding prompts | Code RL |
+| [Nemotron Competitive Coding RL](https://huggingface.co/datasets/nvidia/Nemotron-RL-coding-competitive_coding) | — | Coding RL task distribution | Competitive-coding RL |
+| [SWE-rebench V2](https://huggingface.co/datasets/nebius/SWE-rebench-V2) | ~32K tasks, 20 languages | Expanded multilingual repository tasks | Broader SWE RL coverage |
+| [Open-Instruct SWE-smith](https://huggingface.co/datasets/allenai/open-instruct-swe-smith) | — | SWE-smith task and grading integrations | SWE RL |
+| [Nemotron Agentic SWE RL](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-SWE-Pivot-v1) | — | SWE-oriented RL training data | SWE RL |
+| [Nemotron Cascade RL SWE](https://huggingface.co/datasets/nvidia/Nemotron-Cascade-RL-SWE) | — | Software engineering RL task data | SWE RL |
+| [Nemotron Cascade 2 RL](https://huggingface.co/datasets/nvidia/Nemotron-Cascade-2-RL-data) | — | Broader RL mixture containing SWE tasks | Mixed RL |
+| [Terminal-Bench 2.0](https://huggingface.co/datasets/harborframework/terminal-bench-2.0) 🧪 | — | Complex terminal tasks; keep protected for evaluation | Terminal evaluation |
+| [Verified Terminal-Bench 2](https://huggingface.co/datasets/zai-org/terminal-bench-2-verified) 🧪 | — | Audited benchmark task collection | Terminal evaluation |
 
 Track the strength of each test suite; passing visible tests is not the same as a correct solution.
 
@@ -529,6 +566,8 @@ The core artifact is a trajectory: `τ = (s0, a0, o1, a1, o2, …, aT, r)` with 
 | [Longtail-SWE Trajectories](https://huggingface.co/datasets/nebius/Longtail-SWE-trajectories) | — | Hard software tasks | Failure analysis, challenging trajectories |
 | [Thoughtworks Agentic Coding Trajectories](https://huggingface.co/datasets/thoughtworks/agentic-coding-trajectories) | — | Multi-framework trace aggregation | Comparative agent behavior |
 | [SFT Benchmark Trajectories](https://huggingface.co/datasets/Heisenger/sft-benchmark-trajectories) | — | Multiple published trajectory sources | Comparison and normalization |
+| [Microsoft Orchard](https://huggingface.co/datasets/microsoft/Orchard) | ~107K trajectories (SWE) | Partial-progress trajectory segments from incomplete runs | Credit assignment, recovery learning |
+| [SI2CA Training Trajectories](https://huggingface.co/datasets/Self-Improving-Coding-Agents/SI2CA-Training-Trajectories) | 32,340 trajectories | Alternative curation strategies over the same executable tasks | Trajectory-selection research |
 
 ##### General tool use and multi-domain agents
 
@@ -753,6 +792,10 @@ Keep these out of training. Use three pools: a fixed **regression suite**, an un
 | Prompt-injection resistance | [AgentDojo](https://github.com/ethz-spylab/agentdojo) | 97 tasks, 629 security cases | Attack success and utility |
 | Humor generation | [SemEval 2026 MWAHAHA](https://pln-fing-udelar.github.io/semeval-2026-humor-gen/) | — | Constrained jokes in English, Spanish, Chinese and humorous GIF captions; human pairwise preferences |
 | Pun generation | [Phunny](https://huggingface.co/datasets/disi-unibo-nlp/Phunny) | 350 | Novel pun generation and resolution |
+| Practical function-level coding | [BigCodeBench](https://github.com/bigcode-project/bigcodebench) 🧪 | — | Execution pass rate |
+| Stronger HumanEval/MBPP tests | [EvalPlus](https://github.com/evalplus/evalplus) 🧪 | — | Execution pass rate |
+| Multilingual function generation | [HumanEval-X](https://github.com/THUDM/CodeGeeX) 🧪 | — | Execution pass rate |
+| Harder SWE evaluation | [SWE-bench Pro](https://www.swebench.com/) 🧪 | — | Resolved tasks |
 
 Some sets appear in both training and evaluation literature. Training on MATH train problems is compatible with testing on held-out problems; training on your final test set invalidates the test.
 
